@@ -77,6 +77,10 @@ p {
 .menu-open .ion-navicon:before {
     content: "\f2ca";
 }
+/*cor do menu*/
+.bar{
+      background-color: #2573bc !important;
+}
 
 .item.item-radio .radio-icon {
     opacity: 1;
@@ -117,7 +121,7 @@ p {
 }
 
 #modal {
-    background-color: #ef4e3a;
+    background-color: #39a0ef;
     border-radius: 100%;
     box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.2);
     position: fixed;
@@ -135,82 +139,4 @@ p {
     border-top: solid 4px #ef4e3a;
     opacity: 1;
     z-index: 9;
-}
-/* CODE */
-
-.code {
-    color: #333;
-    font-family: monospace;
-    padding: 10px;
-    white-space: pre;
-}
-
-.code-wrapper {
-    padding-bottom: 30px;
-    padding-top: 15px;
-}
-
-.code-wrapper::before {
-    color: #1B5E20;
-    font-family: "Ionicons";
-    speak: none;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    text-rendering: auto;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    content: '\f216 ';
-}
-
-.code-wrapper.active::before {
-    content: '\f207 ';
-}
-
-.code-wrapper .toggle {
-    color: #4CAF50;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 8px;
-    text-decoration: underline;
-}
-
-.code-wrapper .code {
-    opacity: 0;
-    margin-top: -20px;
-    height: 0;
-    overflow: hidden;
-    position: absolute;
-    transition: 0.1s all ease-in-out;
-    z-index: 9999999999;
-}
-
-.code-wrapper.code-wrapper-last .code {
-    position: relative;
-}
-
-.code-wrapper.active .code {
-    background: #f9f9f9;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
-    left: 16px;
-    height: initial;
-    margin-top: 15px;
-    padding: 15px;
-    right: 16px;
-    opacity: 1;
-    transition: 0.3s all ease-in-out;
-    width: initial;
-}
-
-.popover {
-    left: initial !important;
-    right: 16px !important;
-    top: 16px !important;
-}
-.platform-android .popover{
-margin-top:10px;
 }
