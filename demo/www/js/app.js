@@ -29,57 +29,48 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'AppCtrl'
     })
 
-    .state('app.lists', {
-        url: '/lists',
+    .state('app.horario', {
+        url: '/horario',
         views: {
             'menuContent': {
-                templateUrl: 'templates/lists.html',
-                controller: 'ListsCtrl'
+                templateUrl: 'templates/horario.html',
+                controller: 'HorarioCtrl'
             }
         }
     })
 
-    .state('app.ink', {
-        url: '/ink',
+    .state('app.login', {
+        url: '/login',
         views: {
             'menuContent': {
-                templateUrl: 'templates/ink.html',
-                controller: 'InkCtrl'
+                templateUrl: 'templates/login.html',
+                controller: 'LoginCtrl'
             }
         }
     })
 
-    .state('app.motion', {
-        url: '/motion',
+    .state('app.turma', {
+        url: '/turma',
         views: {
             'menuContent': {
-                templateUrl: 'templates/motion.html',
-                controller: 'MotionCtrl'
+                templateUrl: 'templates/turma.html',
+                controller: 'TurmaCtrl'
             }
         }
     })
 
-    .state('app.components', {
-        url: '/components',
+    .state('app.calendario', {
+        url: '/calendario',
         views: {
             'menuContent': {
-                templateUrl: 'templates/components.html',
-                controller: 'ComponentsCtrl'
+                templateUrl: 'templates/calendario.html',
+                controller: 'CalendarioCtrl'
             }
         }
     })
 
-    .state('app.extensions', {
-        url: '/extensions',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/extensions.html',
-                controller: 'ExtensionsCtrl'
-            }
-        }
-    })
     ;
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/components');
+    $urlRouterProvider.otherwise('/app/turma');
 });
