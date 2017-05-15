@@ -1,6 +1,11 @@
 /* Empty. Add your own CSS if you like */
 /* Utilities */
-
+#page{
+   background-color: #eeeeee;
+}
+.card{
+  background-color: #ffffff;
+}
 .link {
     color: #116262;
     font-weight: bold;
