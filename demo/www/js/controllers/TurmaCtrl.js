@@ -1,12 +1,20 @@
-﻿app.controller('TurmaCtrl', function ($scope, $stateParams, ionicMaterialInk) {
-    //ionic.material.ink.displayEffect();
-    ionicMaterialInk.displayEffect();
+﻿'use strict';
 
-    // Toggle Code Wrapper
-    var code = document.getElementsByClassName('code-wrapper');
-    for (var i = 0; i < code.length; i++) {
-        code[i].addEventListener('click', function() {
-            this.classList.toggle('active');
-        });
-    }
+app.controller('TurmaCtrl', function ($scope, $stateParams, ionicMaterialInk) {
+  
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.$parent.setHeaderFab('left');
+
+ // Delay expansion
+    $timeout(function() {
+        $scope.isExpanded = true;
+        $scope.$parent.setExpanded(true);
+    }, 300);
+
+    // Set Motion
+    ionicMaterialMotion.fadeSlideInRight();
+
+    // Set Ink
+    ionicMaterialInk.displayEffect();
 });

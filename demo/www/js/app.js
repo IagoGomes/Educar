@@ -56,6 +56,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 templateUrl: 'templates/turma.html',
                 controller: 'TurmaCtrl'
             }
+
         }
     })
 
