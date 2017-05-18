@@ -1,7 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+require APPPATH . '/libraries/REST_Controller.php';
+
+class Welcome extends REST_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -24,4 +26,28 @@ class Welcome extends CI_Controller {
 
 		$this->load->view('welcome_message');
 	}
+
+	public function db_get(){
+
+		$this->load->model('database');
+		//$id='1';
+		$username = $this->get('username');
+		$password= $this->get('password');
+		$users = $this->database->users($username, $password)->row_array();
+
+		if($users){
+		    $result=json_encode($users);
+		    $this->response($users, REST_Controller::HTTP_OK);        
+		}
+		else {
+		    $result = [array('username'=> false, 'password'=> false)];
+		    $this->response($result, REST_Controller::HTTP_OK);
+		}
+
+	}
+
+        public function users_get() {
+            $this->response("my first api");
+        }	
+
 }
