@@ -2,11 +2,12 @@
 
 app.controller('TurmaCtrl', function ($scope, $stateParams, ionicMaterialInk) {
   
+    // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     $scope.$parent.setHeaderFab('left');
 
- // Delay expansion
+    // Delay expansion
     $timeout(function() {
         $scope.isExpanded = true;
         $scope.$parent.setExpanded(true);

@@ -1,30 +1,33 @@
-/* Empty. Add your own CSS if you like */
-/* Utilities */
-#page{
-   background-color: #eeeeee;
+/*Estilos costumizados*/
+
+#page {
+    background-color: #ecf0f1;
 }
-.card{
-  background-color: #ffffff;
+#custom_menu{
+   background-color: #ecf0f1;
 }
-.link {
-    color: #116262;
-    font-weight: bold;
+.bar.bar-assertive{
+   background-color: #2980b9 !important;
+   border-color: #3498db !important;
+}
+#custom_button{
+  background-color:#2980b9 !important;
+}
+#custom_login{
+  background-color:#95a5a6 ;
 }
 
-a {
-   background-color: #eeeeee;
-}
-h4 {
-    color: #116262;
-    font-size: 22px;
-    margin-bottom: 16px;
+
+/* General
+==================================*/
+h1 {
+    color: #fff;
+    text-shadow: 0 1px 0px #000;
+    font-size: 42px;
 }
 
-h4:first-child {
-    border-top: none;
-    padding-top: initial;
-}
-
+/* Utilities
+==================================*/
 .title-bordered {
     border-top: solid 2px #bbb;
     padding-top: 30px;
@@ -35,42 +38,35 @@ p {
     margin: 0 0 25px;
 }
 
-.no-border {
-    border: none;
+.scroll {
+    height: 100%;
 }
 
-.static {
-    position: static;
-}
 
-.bold {
-    font-weight: bold;
-}
-
-.border-top {
-    border-top: solid 1px #ccc;
-    padding-top: 30px;
-}
-
-.blue-grey-900 {
-    background-color: #263238 !important;
-    color: #fff;
-}
-/* Menu */
-
+/* Menu
+==================================*/
 .menu .bar.bar-header.expanded {
-    background-image: url('../img/material-graphite.jpg');
-    background-size: 120%;
-    background-position: 0%;
     transition: all .5s ease-in-out;
+}
+
+.menu-open .bar.bar-header.expanded {
+    background-color: #222;
+}
+
+.menu h2 {
+    bottom: 0;
+    font-size: 18px;
+    left: 16px;
+    position: absolute;
+}
+
+.menu .avatar {
+    height: 88px;
+    width: 88px;
 }
 
 .menu.menu-left * {
     font-weight: bold;
-}
-
-.item-radio input:checked ~ .item-content {
-    background: transparent;
 }
 
 .menu-open .ion-navicon {
@@ -82,66 +78,21 @@ p {
 .menu-open .ion-navicon:before {
     content: "\f2ca";
 }
-/*cor do menu*/
-.bar{
-      background-color: #2573bc !important;
-}
 
-.item.item-radio .radio-icon {
-    opacity: 1;
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
-}
 
-.item.item-radio:active .radio-icon {
-    opacity: 0;
-    transform: scale(1.6);
-    -webkit-transition: all 0.1s ease-in-out;
-    transition: all 0.1s ease-in-out;
-}
-
-.directions.button-bar {
+/* Login
+==================================*/
+.app-icon {
+    background-color: #fff;
+    background: url('../img/crown.jpg') center;
+    background-size: cover;
+    border-radius: 50%;
+    height: 125px;
     margin: 0 auto;
-    width: 33.333%;
+    width: 125px;
 }
 
-.directions.button-bar button {
-    line-height: 26px;
-}
-
-.ion-arrow-right-c.top-left:before {
-    transform: rotate(-135deg);
-}
-
-.ion-arrow-right-c.top-right:before {
-    transform: rotate(-45deg);
-}
-
-.ion-arrow-right-c.bottom-left:before {
-    transform: rotate(-225deg);
-}
-
-.ion-arrow-right-c.bottom-right:before {
-    transform: rotate(45deg);
-}
-
-#modal {
-    background-color: #39a0ef;
-    border-radius: 100%;
-    box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.2);
+.social-login {
     position: fixed;
-    height: 50%;
     bottom: 0;
-    opacity: 0;
-    width: 700px;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-}
-
-.expand #modal {
-    background-color: #DBDBDB;
-    border-radius: 0;
-    border-top: solid 4px #ef4e3a;
-    opacity: 1;
-    z-index: 9;
 }
