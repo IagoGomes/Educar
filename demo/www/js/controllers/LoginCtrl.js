@@ -1,12 +1,8 @@
-﻿app.controller('LoginCtrl', function ($scope, $stateParams, ionicMaterialInk) {
-    //ionic.material.ink.displayEffect();
+﻿app.controller('LoginCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk) {
+    $scope.$parent.clearFabs();
+    $timeout(function() {
+        $scope.$parent.hideHeader();
+    }, 0);
     ionicMaterialInk.displayEffect();
-
-    // Toggle Code Wrapper
-    var code = document.getElementsByClassName('code-wrapper');
-    for (var i = 0; i < code.length; i++) {
-        code[i].addEventListener('click', function() {
-            this.classList.toggle('active');
-        });
-    }
 });
+

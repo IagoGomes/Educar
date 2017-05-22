@@ -1,12 +1,24 @@
-﻿app.controller('HorarioCtrl', function ($scope, $stateParams, ionicMaterialInk) {
-    //ionic.material.ink.displayEffect();
-    ionicMaterialInk.displayEffect();
+﻿app.controller('HorarioCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    // Set Header
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
 
-    // Toggle Code Wrapper
-    var code = document.getElementsByClassName('code-wrapper');
-    for (var i = 0; i < code.length; i++) {
-        code[i].addEventListener('click', function() {
-            this.classList.toggle('active');
+    // Set Motion
+    $timeout(function() {
+        ionicMaterialMotion.slideUp({
+            selector: '.slide-up'
         });
-    }
+    }, 300);
+
+    $timeout(function() {
+        ionicMaterialMotion.fadeSlideInRight({
+            startVelocity: 3000
+        });
+    }, 700);
+
+    // Set Ink
+    ionicMaterialInk.displayEffect();
 });

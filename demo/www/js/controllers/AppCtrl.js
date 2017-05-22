@@ -1,4 +1,9 @@
-﻿app.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout) {
+﻿/* global angular, document, window */
+'use strict';
+
+angular.module('starter.controllers', [])
+
+.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
@@ -80,4 +85,7 @@
             fabs[0].remove();
         }
     };
-});
+})
+
+
+;

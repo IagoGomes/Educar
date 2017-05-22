@@ -1,7 +1,4 @@
-﻿'use strict';
-
-app.controller('TurmaCtrl', function ($scope, $stateParams, ionicMaterialInk) {
-  
+app.controller('TurmaCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion) {
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
