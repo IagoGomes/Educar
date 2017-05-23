@@ -33,7 +33,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     $stateProvider.state('app', {
         url: '/app',
         abstract: true,
-        templateUrl: 'templates/menu.html',
+        templateUrl: 'templates/menu/menu.html',
         controller: 'AppCtrl'
     })
 
@@ -41,7 +41,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
         url: '/turma',
         views: {
             'menuContent': {
-                templateUrl: 'templates/turma.html',
+                templateUrl: 'templates/turma/turma.html',
                 controller: 'TurmaCtrl'
             },
             'fabContent': {
@@ -60,7 +60,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
         url: '/login',
         views: {
             'menuContent': {
-                templateUrl: 'templates/login.html',
+                templateUrl: 'templates/login/login.html',
                 controller: 'LoginCtrl'
             },
             'fabContent': {
@@ -74,7 +74,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
         url: '/horario',
         views: {
             'menuContent': {
-                templateUrl: 'templates/horario.html',
+                templateUrl: 'templates/horario/horario.html',
                 controller: 'HorarioCtrl'
             },
             'fabContent': {
