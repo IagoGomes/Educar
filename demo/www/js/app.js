@@ -44,6 +44,14 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 templateUrl: 'templates/turma.html',
                 controller: 'TurmaCtrl'
             },
+            'fabContent': {
+                template: '<button id="fab-turma" class="button button-fab button-fab-bottom-right expanded button-energized-900 spin"><i class="icon ion-clipboard"></i></button>',
+                controller: function ($timeout) {
+                    $timeout(function () {
+                        document.getElementById('fab-turma').classList.toggle('on');
+                    }, 900);
+                }
+            }
            
         }
     })
@@ -54,9 +62,6 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
             'menuContent': {
                 templateUrl: 'templates/login.html',
                 controller: 'LoginCtrl'
-            },
-            'fabContent': {
-                template: ''
             }
         }
     })

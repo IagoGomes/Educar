@@ -1,5 +1,5 @@
 <ion-view view-title="Turma" id="page">
-    <ion-content >
+    <ion-content ng-class="{expanded:$scope.isExpanded}" >
         <div class="content has-header">
             <div class="list animate-fade-slide-in-right">
                
@@ -38,7 +38,7 @@
                     </a>
                 </md-list-item>
                 <md-list-item>
-                    <a class="item item-avatar" id="custom_item" >
+                    <a class="item item-avatar" id="custom_item" ng-click="#"  >
                         <img src="img/sansa.jpg">
                         <h2>Sansa Stark</h2>
                         <p>sansa@gmail.com</p>
