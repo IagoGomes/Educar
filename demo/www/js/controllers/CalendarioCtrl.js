@@ -1,4 +1,9 @@
 ﻿app.controller('CalendarioCtrl', function ($scope, $stateParams, ionicMaterialInk) {
+	 $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
     //ionic.material.ink.displayEffect();
     ionicMaterialInk.displayEffect();
 

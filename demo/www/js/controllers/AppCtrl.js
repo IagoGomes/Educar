@@ -9,6 +9,7 @@ angular.module('starter.controllers', [])
     $scope.isExpanded = false;
     $scope.hasHeaderFabLeft = false;
     $scope.hasHeaderFabRight = false;
+    
 
     var navIcons = document.getElementsByClassName('ion-navicon');
     for (var i = 0; i < navIcons.length; i++) {
