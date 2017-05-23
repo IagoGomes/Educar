@@ -62,7 +62,11 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
             'menuContent': {
                 templateUrl: 'templates/login.html',
                 controller: 'LoginCtrl'
-            }
+            },
+            'fabContent': {
+                template: '',
+                controller: function ($timeout) {}
+           }
         }
     })
 
@@ -72,7 +76,11 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
             'menuContent': {
                 templateUrl: 'templates/horario.html',
                 controller: 'HorarioCtrl'
-            }
+            },
+            'fabContent': {
+                template: '',
+                controller: function ($timeout) {}
+           }
         }
     })
     ;
