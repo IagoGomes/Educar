@@ -1,23 +1,29 @@
 /*Estilos costumizados*/
 
 #page {
-    background-color: #ecf0f1;
+    background-color: #f5f5f5;
 }
 #custom_menu{
-   background-color: #ecf0f1;
+   background-color: #f5f5f5;
 }
 .bar.bar-assertive{
-   background-color: #2980b9 !important;
-   border-color: #3498db !important;
+   background-color: #1a237e !important;
+   border-color: #304ffe !important;
 }
 #custom_button{
   background-color:#2980b9 !important;
 }
 #custom_login{
-  background-color:#95a5a6 ;
+  background-color:#1a237e ;
 }
 #custom_item{
   
+}
+#costum_input_login{
+    width: 95%;
+}
+#fab-turma{
+ background-color:#303f9f;   
 }
 
 

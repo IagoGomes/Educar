@@ -44,14 +44,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 templateUrl: 'templates/turma.html',
                 controller: 'TurmaCtrl'
             },
-            'fabContent': {
-                template: '<button id="fab-turma" class="button button-fab button-fab-top-right expanded button-energized-900 spin"><i class="icon ion-chatbubbles"></i></button>',
-                controller: function ($timeout) {
-                    $timeout(function () {
-                        document.getElementById('fab-turma').classList.toggle('on');
-                    }, 900);
-                }
-            }
+           
         }
     })
 
