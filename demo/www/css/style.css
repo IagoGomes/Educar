@@ -19,6 +19,13 @@
 #custom_item{
   
 }
+#button-OK{
+  background: url('../img/blue-arrow-up-hi.png') no-repeat center center;
+  background-size: contain;
+  height: 100%;
+  width: 5%;
+  margin: 2% 2%;
+}
 #costum_input_login{
     width: 95%;
 }
