@@ -1,0 +1,7 @@
+==> retorna o nome, email e matrícula do aluno
+SELECT a.nome as nome, a.email as email, a.matricula as matricula 
+FROM Matricula as m, Aluno as a 
+WHERE m.idAluno=a.idAluno and m.idTurma=1
+
+
+==> 
