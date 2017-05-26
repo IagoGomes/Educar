@@ -27,8 +27,44 @@ app.controller('TurmaCtrl', function($scope, $stateParams, $timeout, ionicMateri
     ionicMaterialInk.displayEffect();
 	
 	//preencher o array de alunos
-	preencherArrayAlunos();
+    //preencherArrayAlunos();
+showHeaderInfo(1);
+preencherArrayAlunos();
 });
+ 
+ /**
+  * Função para enviar os dados
+  */
+function showHeaderInfo(id) {
+     if(id !== -1){
+
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","php/turma/turma.php?id="+id,true);
+        xmlhttp.send();
+     }else{
+	document.getElementById("resultado").innerHTML="Nenhum Aluno Matriculado";
+     }
+}
+
+
+
+
+
+
+
+
+
 
 function preencherArrayAlunos(){
 	var totalDeAlunos = 5;
@@ -61,12 +97,7 @@ function preencherArrayAlunos(){
 		mediaAluno = document.createTextNode(""+aluno.value);
 		spanMedia.appendChild(mediaAluno);
 		aluno.appendChild(spanMedia);
-		spanFaltas = document.createElement("span");
-		spanFaltas.setAttribute("class", "item-note");
-		//############################ passar para a funcao document.createTextNode() abaixo o num de faltas do aluno que esta no BD #####
-		faltasAluno = document.createTextNode("0");
-		spanFaltas.appendChild(faltasAluno);
-		aluno.appendChild(spanFaltas);
+		
 		itemAluno.appendChild(aluno);//adicionando <a> ao <md-list-item>
 		arrayAlunos.push(itemAluno);//adiciona o aluno ao array de alunos
 		lista.appendChild(itemAluno);
