@@ -2,23 +2,23 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the Horario page.
+ * Generated class for the Turma page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
 @IonicPage()
 @Component({
-  selector: 'page-horario',
-  templateUrl: 'horario.html',
+  selector: 'page-turma',
+  templateUrl: 'turma.html',
 })
-export class Horario {
+export class Turma {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Horario');
+    console.log('ionViewDidLoad Turma');
   }
 
 }
