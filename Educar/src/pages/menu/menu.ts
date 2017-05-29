@@ -3,34 +3,32 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { Turma } from '../turma/turma';
+import { Horario } from '../horario/horario';
+import { Login } from '../login/login';
 
-import { Turma } from '../pages/turma/turma';
-import { Horario } from '../pages/horario/horario';
-import { Login } from '../pages/login/login';
-
-
+/**
+ * Generated class for the Menu page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
 @Component({
-  templateUrl: 'app.html'
+  selector: 'page-menu',
+  templateUrl: 'menu.html',
 })
-export class MyApp {
-  @ViewChild(Nav) nav: Nav;
-
-  rootPage: any = Login;
+export class Menu {
+	@ViewChild(Nav) nav: Nav;
 
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-    this.initializeApp();
-
-    // used for an example of ngFor and navigation
+  	    this.initializeApp();
     this.pages = [
       { title: 'Login', component: Login },
       { title: 'Horario', component: Horario },      
       { title: 'Turma', component: Turma }
-    ];  
-
+    ];  	    
   }
 
   initializeApp() {
@@ -41,7 +39,6 @@ export class MyApp {
       this.splashScreen.hide();
     });
   }
-
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
