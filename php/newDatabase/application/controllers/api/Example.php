@@ -39,7 +39,7 @@ class Example extends REST_Controller {
             ['id' => 2, 'name' => 'Jim', 'email' => 'jim@example.com', 'fact' => 'Developed on CodeIgniter'],
             ['id' => 3, 'name' => 'Jane', 'email' => 'jane@example.com', 'fact' => 'Lives in the USA', ['hobbies' => ['guitar', 'cycling']]],
         ];
-
+        
         $id = $this->get('id');
 
         // If the id parameter doesn't exist return all the users
