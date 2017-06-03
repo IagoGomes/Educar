@@ -75,9 +75,12 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'siac.uesb.br',
-	'username' => 'educar',
-	'password' => 'educar123',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	// 'hostname' => 'siac.uesb.br',
+	// 'username' => 'educar',
+	// 'password' => 'educar123',
 	'database' => 'educar',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
