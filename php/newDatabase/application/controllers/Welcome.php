@@ -36,7 +36,6 @@ class Welcome extends REST_Controller {
 		$users = $this->database->users($username, $password)->row_array();
 
 		if($users){
-		    $result=json_encode($users);
 		    $this->response($users, REST_Controller::HTTP_OK);        
 		}
 		else {
