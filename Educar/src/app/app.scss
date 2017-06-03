@@ -14,3 +14,31 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.toolbar-background-md{
+   background-color: #1a237e;
+}
+
+.toolbar-title-md {
+   color: white;
+}
+
+.bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default{
+  color: white;
+}
+
+.content-md {
+  background-color: #f5f5f5;
+}
+
+.item-md {
+ background-color: #f5f5f5;
+}
+
+.card-md {
+ background-color: white !important;
+}
+
+#item-card-custom {
+ background-color: white !important;
+}
