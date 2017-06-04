@@ -54,6 +54,11 @@ export class Turma {
   /*quando um card de aluno é selecionado*/
   itemSelected(aluno: any) {
     if(this.habilitarLancarNota){
+        for(let a of this.alunos){
+        	if(a.idAluno != aluno.idAluno){
+        	    a.hidden=false;
+        	}
+        }
         aluno.hidden=!aluno.hidden;
     }     
   }
