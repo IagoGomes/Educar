@@ -27,18 +27,61 @@ class Turma extends REST_Controller {
 		$this->load->view('welcome_message');
 	}
 
-	public function db_get(){
+	public function turmaInfos_get(){
 
 		$this->load->model('turma_model');
-		//$id='1';
+		
 		$idTurma = $this->get('idTurma');
-		$turma = $this->turma_model->turma_infos($idTurma)->row_array();
+		$idDisciplina= $this->get('idDisciplina');
+
+		$turma = $this->turma_model->turma_infos($idTurma, $idDisciplina)->row_array();
 
 		if($turma){
 		    $this->response($turma, REST_Controller::HTTP_OK);        
 		}
 		else {
-		    $result = [array('idTurma'=> false)];
+		    $result = [array('idTurma'=> false, 'idDisciplina'=>false)];
+		    $this->response($result, REST_Controller::HTTP_OK);
+		}
+
+	}
+
+	public function quantAlunos_get(){
+
+		$this->load->model('turma_model');
+		
+		$idTurma = $this->get('idTurma');
+		$idDisciplina= $this->get('idDisciplina');
+
+		$quantAlunos = $this->turma_model->get_quant_alunos($idTurma, $idDisciplina);
+
+		if($quantAlunos){
+		    $this->response($quantAlunos, REST_Controller::HTTP_OK);        
+		}
+
+		else {
+		    $result = [array('idTurma'=> false, 'idDisciplina'=>false)];
+		    $this->response($result, REST_Controller::HTTP_OK);
+		}
+
+	}
+
+	public function getAlunos_get(){
+
+		$this->load->model('turma_model');
+		
+		$idTurma = $this->get('idTurma');
+		$idDisciplina= $this->get('idDisciplina');
+
+		$alunos = $this->turma_model->get_alunos($idTurma, $idDisciplina)->result_array();
+
+
+		if($alunos){
+		    $this->response($alunos, REST_Controller::HTTP_OK);        
+		}
+		
+		else {
+		    $result = [array('idTurma'=> false, 'idDisciplina'=>false)];
 		    $this->response($result, REST_Controller::HTTP_OK);
 		}
 

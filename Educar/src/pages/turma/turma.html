@@ -9,7 +9,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{nome}}</ion-title>
+    <ion-title>{{titulo}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -24,7 +24,6 @@
 		<p> Sala:  {{sala}} </p>
 		<p> Disciplina: {{disciplina}}</p>
 		<p> Quantidade de Alunos: {{quant_alunos}}</p>
-		<p> Horário: {{horario}} </p>
 	</ion-card-content>
   </ion-card>
   <h5> Discentes </h5>
@@ -33,8 +32,8 @@
 			<ion-avatar item-left>
 				<img src="assets/img/jon-snow.jpg">
 			</ion-avatar>
-			<h2> Jon Snow </h2>
-			<p> email@email</p>
+			<h2> {{aluno.nomeAluno}}</h2>
+			<p> {{aluno.emailAluno}}</p>
 			<ion-badge item-right [ngClass]="mudarCorMedia(0)"> 9.8 </ion-badge>
 		</ion-item>
 		<ion-card-content *ngIf="hidden===false" >

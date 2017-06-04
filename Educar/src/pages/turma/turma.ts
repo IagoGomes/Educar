@@ -15,67 +15,86 @@ import 'rxjs/add/operator/map';
   templateUrl: 'turma.html',
 })
 export class Turma {
+  /*identificadores*/
+  idTurma      : any;
+  idDisciplina : any;
+  /*card info disciplina*/
   unidadeEscolar : string;
-  sala : string;
-  disciplina :string;
-  quant_alunos : any;
-  horario : string;
-  alunos : Array <any>;
-  idTurma : any;
+  sala           : string;
+  disciplina     : string;
+  quant_alunos   : any;
+  alunos         : Array <any>;
+  /*controles*/
   habilitarLancarNota : boolean;
-  notaA: any;
-  hidden:boolean;
-  nome:string;
+  notaA               : any;
+  hidden              :boolean;
+  /*configuração da página*/
+  titulo              :string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
 	this.unidadeEscolar = " ";
-        this.sala = " ";
-        this.disciplina = " ";
-        this.quant_alunos = 0;
-        this.horario = " ";
-        this.nome=" ";
-        this.alunos = ['a', 'n'];
-        this.notaA=0;
-        this.hidden=true;
-        this.atualizarInformacoesTurma();
-        this.atualizarListaAlunos();        
+    this.sala = " ";
+    this.disciplina = " ";
+    this.quant_alunos = 0;
+    this.titulo=" ";
+    
+    this.notaA=0;
+    this.hidden=true;
+
+    this.atualizarInformacoesTurma();
+    this.atualizarListaAlunos();
+
+            
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Turma');
   }
 
+  /*quando um card de aluno é selecionado*/
   itemSelected(item: any) {
     if(this.habilitarLancarNota){
         this.hidden=!this.hidden;
     }     
   }
-
+  /*quando o fab é selecionado*/
   fabLancarNota(){
       this.habilitarLancarNota = !this.habilitarLancarNota;
   }
+  /*para mudar a cor do fab quando selecionado*/
   mudarCorFab(){	
    	return (this.habilitarLancarNota) ? 'fabAzul' : 'fabVermelha';
   }
-
+  /*para mudar a cor da média do aluno*/ 
   mudarCorMedia(media : any){
  	return (media >= 7) ? "badgeAprovado" : ((media>=0) ? 'badgeReprovado' : 'badgeSemResultado');
- }
-  
+  }
+  /*atualiza o card infos da disciplina*/
   atualizarInformacoesTurma(){
        console.log(this.idTurma);		
-       this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/db/?idTurma='+1)
+       this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/turmaInfos/?idTurma='+1+'&idDisciplina='+1)
 		.map(res => res.json()).subscribe(data => {
                    this.sala=data.sala; 
-                   this.quant_alunos=data.quantAlunos;
                    this.disciplina=data.disciplina;
-                   this.horario=data.horaInicial + "/" + data.horaFinal;
-                   this.nome=data.nome;
+                   this.titulo=data.nome;
                    this.unidadeEscolar=data.unidadeEscolar;
                 });
+		this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/quantAlunos/?idTurma='+1+'&idDisciplina='+1)
+		.map(res => res.json()).subscribe(data => {
+                   this.quant_alunos=data; 
+                });
+
   }
-
+  /*atualiza a lista de alunos*/
   atualizarListaAlunos(){
+  	this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/getAlunos/?idTurma='+1+'&idDisciplina='+1)
+		.map(res => res.json()).subscribe(data => {
+                   this.alunos=data;
+                   for(let aluno of this.alunos){
+                   	aluno.hidden=true;
+                   }
+             });
 
+        
   }
 }
