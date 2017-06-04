@@ -36,12 +36,12 @@
 			<p> {{aluno.emailAluno}}</p>
 			<ion-badge item-right [ngClass]="mudarCorMedia(0)"> 9.8 </ion-badge>
 		</ion-item>
-		<ion-card-content *ngIf="hidden===false" >
+		<ion-card-content *ngIf="isExibicao(aluno)" >
 			<ion-range min="0" max="100" step="1"  color="blue" *ngFor="let nota of [1,2,3]"  [(ngModel)]="notaA">
 			    <p range-right small>{{notaA}}</p>
 			</ion-range>
 		</ion-card-content>
-		<ion-row *ngIf="hidden===false">
+		<ion-row *ngIf="isExibicao(aluno)">
 			<ion-col text-left> 
 			<p>salvo<p>
 			</ion-col>

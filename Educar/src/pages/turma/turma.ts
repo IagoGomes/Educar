@@ -52,9 +52,9 @@ export class Turma {
   }
 
   /*quando um card de aluno é selecionado*/
-  itemSelected(item: any) {
+  itemSelected(aluno: any) {
     if(this.habilitarLancarNota){
-        this.hidden=!this.hidden;
+        aluno.hidden=!aluno.hidden;
     }     
   }
   /*quando o fab é selecionado*/
@@ -91,10 +91,14 @@ export class Turma {
 		.map(res => res.json()).subscribe(data => {
                    this.alunos=data;
                    for(let aluno of this.alunos){
-                   	aluno.hidden=true;
+                   	aluno.hidden=false;
                    }
              });
 
         
+  }
+
+  isExibicao(aluno:any){
+  	return aluno.hidden;
   }
 }
