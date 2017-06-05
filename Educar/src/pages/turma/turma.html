@@ -9,42 +9,45 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Turma</ion-title>
+    <ion-title>{{titulo}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
+  <ion-fab top right edge>
+  	<button ion-fab mini (click)="fabLancarNota()" [ngClass]="mudarCorFab()"><ion-icon name="create" md="md-create" ></ion-icon></button>
+  </ion-fab>
   <ion-card>	  
 	<ion-card-content>
-		<p> Local: </p>
-		<p> Sala:  </p>
-		<p> Disciplina: </p>
-		<p> Quantidade de Alunos: </p>
-		<p> Horário: </p>
+		<p> Local: {{unidadeEscolar}} </p>
+		<p> Sala:  {{sala}} </p>
+		<p> Disciplina: {{disciplina}}</p>
+		<p> Quantidade de Alunos: {{quant_alunos}}</p>
 	</ion-card-content>
   </ion-card>
-  <ion-card>
-	<ion-card-header>
-		Discentes
-	</ion-card-header>
-	<ion-list>
-               <ion-item>
+  <h5> Discentes </h5>
+	<ion-card *ngFor="let aluno of alunos" (click)="itemSelected(aluno)" >
+		<ion-item id="item-card-custom">
 			<ion-avatar item-left>
 				<img src="assets/img/jon-snow.jpg">
 			</ion-avatar>
-			<h2> Jon Snow </h2>
-			<p> email@email</p>
-                        <ion-badge item-right> 9.8 </ion-badge>
-	       </ion-item>
-               <ion-item>
-			<ion-avatar item-left>
-				<img src="assets/img/jon-snow.jpg">
-			</ion-avatar>
-			<h2> Jon Snow </h2>
-			<p> email@email</p>
-                        <ion-badge item-right> 9.8 </ion-badge>
-	       </ion-item>
-	</ion-list>
-  </ion-card>
+			<h2> {{aluno.nomeAluno}}</h2>
+			<p> {{aluno.emailAluno}}</p>
+			<ion-badge item-right [ngClass]="mudarCorMedia(0)"> 9.8 </ion-badge>
+		</ion-item>
+		<ion-card-content *ngIf="isExibicao(aluno)" >
+			<ion-range min="0" max="100" step="1"  color="blue" *ngFor="let nota of [1,2,3]"  [(ngModel)]="notaA">
+			    <p range-right small>{{notaA}}</p>
+			</ion-range>
+		</ion-card-content>
+		<ion-row *ngIf="isExibicao(aluno)">
+			<ion-col text-left> 
+			<p>salvo<p>
+			</ion-col>
+			<ion-col text-right>
+			<p>Aprovado<p>
+			</ion-col>
+		</ion-row>
+	</ion-card>
 </ion-content>
