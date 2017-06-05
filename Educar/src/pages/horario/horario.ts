@@ -13,12 +13,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'horario.html',
 })
 export class Horario {
+   disciplines = [
+       {name:"Portugues", place: "UESB", class:"Sétimo ano", time: "8h30 - 9h30"},
+       {name:"Portugues", place: "UESB", class:"Sétimo ano", time: "8h30 - 9h30"}];
+   name = "Uau";
+   
+   names = ["Primeiro", "Segundo", "Terceiro"];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+      
   }
+      
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Horario');
   }
+
+ 
 
 }
