@@ -21,4 +21,6 @@ export class Horario {
     console.log('ionViewDidLoad Horario');
   }
 
+  //$scope.name = "Yan";
+
 }
