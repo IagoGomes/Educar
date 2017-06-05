@@ -30,7 +30,7 @@
 	<ion-card *ngFor="let aluno of alunos" (click)="itemSelected(aluno)" >
 		<ion-item id="item-card-custom">
 			<ion-avatar item-left>
-				<img src="assets/img/jon-snow.jpg">
+				<img src="{{aluno.sexo}}">
 			</ion-avatar>
 			<h2> {{aluno.nomeAluno}}</h2>
 			<p> {{aluno.emailAluno}}</p>

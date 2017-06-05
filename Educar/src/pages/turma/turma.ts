@@ -50,14 +50,12 @@ export class Turma {
     this.numNotas =0; 
 
     this.atualizarInformacoesTurma();
-    this.atualizarListaAlunos();
-
-            
-  }
-
+    this.atualizarListaAlunos();         
+  }//fim constructor
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad Turma');
-  }
+  }//fim ionViewDidLoad
 
   /*quando um card de aluno é selecionado*/
   itemSelected(aluno: any) {
@@ -74,19 +72,19 @@ export class Turma {
         }
 
     }     
-  }
+  }//fim itemSelected
   /*quando o fab é selecionado*/
   fabLancarNota(){
       this.habilitarLancarNota = !this.habilitarLancarNota;
-  }
+  }//fim fabLancarNota
   /*para mudar a cor do fab quando selecionado*/
   mudarCorFab(){	
-   	return (this.habilitarLancarNota) ? 'fabAzul' : 'fabVermelha';
-  }
+   	return (this.habilitarLancarNota) ? 'fabVerde' : 'fabVermelha';
+  }//fim mudarCorFab
   /*para mudar a cor da média do aluno*/ 
   mudarCorMedia(media : any){
  	return (parseFloat(media) >= 7) ? "badgeAprovado" : ((parseFloat(media)>=0) ? 'badgeReprovado' : 'badgeSemResultado');
-  }
+  }//fim mudarCorMedia
   /*atualiza o card infos da disciplina*/
   atualizarInformacoesTurma(){
        console.log(this.idTurma);		
@@ -102,7 +100,7 @@ export class Turma {
                    this.quant_alunos=data; 
                 });
 
-  }
+  }//fim atualizarInformacoesTurma
   /*atualiza a lista de alunos*/
   atualizarListaAlunos(){
   	this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/getAlunos/?idTurma='+1+'&idDisciplina='+1)
@@ -111,6 +109,7 @@ export class Turma {
                    for(let aluno of this.alunos){
                    	aluno.hidden=false;
                    	aluno.modificando=false;
+                   	aluno.sexo=this.definirAvatar(aluno.sexo);
                    }
              });
     
@@ -135,11 +134,11 @@ export class Turma {
              });
        
         
-  }
+  }//fim atualizarListaAlunos
 
   isExibicao(aluno:any){
   	return aluno.hidden;
-  }
+  }//fim isExibicao
 
   mudarNota(nota:any, aluno:any){
   	aluno.modificando=true;
@@ -157,11 +156,18 @@ export class Turma {
              this.numNotas=0;
 		});
 
-  }
+  }//fim mudarNota
 
   roundNumber(num, scale) {
 	  //return (Math.round(parseFloat(num)*10*parseFloat(scale))/(10*parseFloat(scale)));
 	  return parseFloat(num).toFixed(scale);
-  }
+  }//fim roundNumber
 
+  definirAvatar(sexo: any){
+        if(sexo == 'M'){
+           return "assets/img/m.jpg";
+        }else{
+           return "assets/img/f.png";
+        }
+  }
 }

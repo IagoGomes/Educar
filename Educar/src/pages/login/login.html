@@ -9,12 +9,17 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Login</ion-title>
+    <ion-title>Educar</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
+        <ion-list>
+            <ion-item>
+		 <img src="assets/img/logo.png"  align="middle" id="img_logo">
+           </ion-item>
+        </ion-list>
 	<form (submit)="doLogin()">
 		<ion-list>
 			<ion-item>
@@ -26,7 +31,7 @@
 				<ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
 			</ion-item>
 			<div padding>
-				<button ion-button color="primary" block>Login</button>
+				<button ion-button color="primary" block>Acessar</button>
 			</div>
 		</ion-list>
 	</form>

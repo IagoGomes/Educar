@@ -34,6 +34,7 @@ class Turma_Model extends CI_Model {
     	$this->db->select('a.nome as nomeAluno');
     	$this->db->select('a.matricula as matriculaAluno');
     	$this->db->select('a.email as emailAluno');
+    	$this->db->select('a.sexo as sexo');
     	    	
     	$this->db->from('Aluno a');
     	$this->db->from('Matricula m');
