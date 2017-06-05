@@ -87,4 +87,41 @@ class Turma extends REST_Controller {
 
 	}
 
+        public function getNotas_get(){
+ 		$this->load->model('turma_model');
+		
+		$idTurma = $this->get('idTurma');
+		$idDisciplina= $this->get('idDisciplina');
+
+		$alunos = $this->turma_model->get_notas_alunos($idTurma, $idDisciplina)->result_array();
+
+
+		if($alunos){
+		    $this->response($alunos, REST_Controller::HTTP_OK);        
+		}
+		
+		else {
+		    $result = [array('idTurma'=> false, 'idDisciplina'=>false)];
+		    $this->response($result, REST_Controller::HTTP_OK);
+		}               
+        }
+
+	public function mudarNota_get(){
+		$this->load->model('turma_model');
+		
+		$idDisciplinaAvaliacao = $this->get('idDisciplinaAvaliacao');
+		$nota= $this->get('nota');
+
+		$result = $this->turma_model->mudar_nota_aluno($idDisciplinaAvaliacao, $nota);
+
+
+		if($result){
+		    $this->response($result, REST_Controller::HTTP_OK);        
+		}
+		
+		else {
+		    $result = [array('idTurma'=> false, 'idDisciplina'=>false)];
+		    $this->response($result, REST_Controller::HTTP_OK);
+		}               		
+	}
 }

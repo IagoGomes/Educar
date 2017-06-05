@@ -24,9 +24,13 @@ export class Turma {
   disciplina     : string;
   quant_alunos   : any;
   alunos         : Array <any>;
+  notas          : Array <any>;
+  ns          : Array <number>;
+  media : any;
+  numNotas: any;
   /*controles*/
   habilitarLancarNota : boolean;
-  notaA               : any;
+
   hidden              :boolean;
   /*configuração da página*/
   titulo              :string;
@@ -38,8 +42,12 @@ export class Turma {
     this.quant_alunos = 0;
     this.titulo=" ";
     
-    this.notaA=0;
     this.hidden=true;
+
+    this.ns = [];
+ 
+    this.media = 0;
+    this.numNotas =0; 
 
     this.atualizarInformacoesTurma();
     this.atualizarListaAlunos();
@@ -59,7 +67,12 @@ export class Turma {
         	    a.hidden=false;
         	}
         }
-        aluno.hidden=!aluno.hidden;
+        if(!aluno.modificando){
+           aluno.hidden=!aluno.hidden;
+        }else{
+           aluno.modificando=false;
+        }
+
     }     
   }
   /*quando o fab é selecionado*/
@@ -72,7 +85,7 @@ export class Turma {
   }
   /*para mudar a cor da média do aluno*/ 
   mudarCorMedia(media : any){
- 	return (media >= 7) ? "badgeAprovado" : ((media>=0) ? 'badgeReprovado' : 'badgeSemResultado');
+ 	return (parseFloat(media) >= 7) ? "badgeAprovado" : ((parseFloat(media)>=0) ? 'badgeReprovado' : 'badgeSemResultado');
   }
   /*atualiza o card infos da disciplina*/
   atualizarInformacoesTurma(){
@@ -97,13 +110,58 @@ export class Turma {
                    this.alunos=data;
                    for(let aluno of this.alunos){
                    	aluno.hidden=false;
+                   	aluno.modificando=false;
                    }
              });
-
+    
+    this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/getNotas/?idTurma='+1+'&idDisciplina='+1)
+		.map(res => res.json()).subscribe(data => {
+                   this.notas=data;
+                   for(let aluno of this.alunos){
+	                   for(let nota of this.notas){
+	                   		if(nota.idAluno == aluno.idAluno){
+	                   				this.ns.push(nota);
+	                   				this.media=  parseFloat(this.media) + parseFloat(nota.nota);
+	                   				this.numNotas = parseFloat(this.numNotas) + 1;
+	                   		}
+	                   }
+	                   aluno.nota = this.ns;
+	                   this.media=parseFloat(this.media)/parseFloat(this.numNotas);
+	                   aluno.media = this.roundNumber(this.media, 2);
+	                   this.numNotas =0;
+	                   this.media=0;
+	                   this.ns = [];
+               	   }
+             });
+       
         
   }
 
   isExibicao(aluno:any){
   	return aluno.hidden;
   }
+
+  mudarNota(nota:any, aluno:any){
+  	aluno.modificando=true;
+  	this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/mudarNota/?idDisciplinaAvaliacao='+nota.idDisciplinaAvaliacao+'&nota='+nota.nota)
+		.map(res => res.json()).subscribe(data => {
+             this.media=0;
+             this.numNotas =0;
+             for(let n of aluno.nota){
+                this.media=parseFloat(this.media) + parseFloat(n.nota);
+                this.numNotas=parseFloat(this.numNotas) + 1;
+             }
+             this.media=parseFloat(this.media)/parseFloat(this.numNotas);
+             aluno.media=this.roundNumber(this.media,2);
+             this.media=0;
+             this.numNotas=0;
+		});
+
+  }
+
+  roundNumber(num, scale) {
+	  //return (Math.round(parseFloat(num)*10*parseFloat(scale))/(10*parseFloat(scale)));
+	  return parseFloat(num).toFixed(scale);
+  }
+
 }

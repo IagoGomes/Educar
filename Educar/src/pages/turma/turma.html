@@ -34,20 +34,12 @@
 			</ion-avatar>
 			<h2> {{aluno.nomeAluno}}</h2>
 			<p> {{aluno.emailAluno}}</p>
-			<ion-badge item-right [ngClass]="mudarCorMedia(0)"> 9.8 </ion-badge>
+			<ion-badge item-right [ngClass]="mudarCorMedia(aluno.media)"> {{aluno.media}} </ion-badge>
 		</ion-item>
 		<ion-card-content *ngIf="isExibicao(aluno)" >
-			<ion-range min="0" max="100" step="1"  color="blue" *ngFor="let nota of [1,2,3]"  [(ngModel)]="notaA">
-			    <p range-right small>{{notaA}}</p>
+			<ion-range min="0" max="10" step="0.1f"  color="blue" *ngFor="let nota of aluno.nota"  [(ngModel)]=nota.nota (click)="mudarNota(nota, aluno)">
+			    <p range-right small>{{nota.nota}}</p>
 			</ion-range>
 		</ion-card-content>
-		<ion-row *ngIf="isExibicao(aluno)">
-			<ion-col text-left> 
-			<p>salvo<p>
-			</ion-col>
-			<ion-col text-right>
-			<p>Aprovado<p>
-			</ion-col>
-		</ion-row>
 	</ion-card>
 </ion-content>
