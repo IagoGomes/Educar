@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 05-Jun-2017 às 19:09
+-- Generation Time: 08-Jun-2017 às 18:35
 -- Versão do servidor: 5.7.18-0ubuntu0.16.04.1
 -- PHP Version: 7.0.15-0ubuntu0.16.04.4
 
@@ -21,8 +21,7 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-create database `educar`;
-use  `educar`;
+
 --
 -- Estrutura da tabela `Abrangencia`
 --
@@ -307,17 +306,27 @@ CREATE TABLE `Curso` (
   `minimoRecuperacao` decimal(10,3) DEFAULT NULL,
   `minimoApRecup` decimal(10,3) DEFAULT NULL,
   `idUnidadeEscolar` int(11) NOT NULL,
-  `idResultadoAprovado` int(11) NOT NULL,
+  `idResultadoAprovado` int(11) DEFAULT NULL,
   `idResultadoRecuperacao` int(11) DEFAULT NULL,
   `idResultadoDependencia` int(11) DEFAULT NULL,
   `idResultadoRepNota` int(11) DEFAULT NULL,
   `idResultadoRepFalta` int(11) DEFAULT NULL,
-  `idSerieCurso` int(11) NOT NULL,
+  `idSerieCurso` int(11) DEFAULT NULL,
   `idTipoNota` int(11) DEFAULT NULL,
   `idAvaliacaoMedia` int(11) DEFAULT NULL,
   `observacao` varchar(500) DEFAULT NULL,
   `dataLimiteIdadeMinima` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `Curso`
+--
+
+INSERT INTO `Curso` (`idCurso`, `descricao`, `habilitacao`, `freqMinima`, `temIdadeMinima`, `idadeMinima`, `minimoAprovacao`, `minimoRecuperacao`, `minimoApRecup`, `idUnidadeEscolar`, `idResultadoAprovado`, `idResultadoRecuperacao`, `idResultadoDependencia`, `idResultadoRepNota`, `idResultadoRepFalta`, `idSerieCurso`, `idTipoNota`, `idAvaliacaoMedia`, `observacao`, `dataLimiteIdadeMinima`) VALUES
+(1, 'ABC', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'DEF', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'GHI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'JKL', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -436,17 +445,17 @@ CREATE TABLE `DisciplinaAvaliacao` (
 --
 
 INSERT INTO `DisciplinaAvaliacao` (`idDisciplinaAvaliacao`, `idMatriculaDisciplina`, `idAvaliacao`, `idConceito`, `nota`) VALUES
-(2, 1, 1, NULL, '7.00'),
-(3, 2, 1, NULL, '3.00'),
+(2, 1, 1, NULL, '4.70'),
+(3, 2, 1, NULL, '9.30'),
 (4, 3, 1, NULL, '8.00'),
 (5, 4, 1, NULL, '8.00'),
 (6, 5, 1, NULL, '8.00'),
 (7, 6, 1, NULL, '8.00'),
 (8, 7, 1, NULL, '8.00'),
 (9, 8, 1, NULL, '8.00'),
-(10, 9, 1, NULL, '8.00'),
+(10, 9, 1, NULL, '7.90'),
 (11, 10, 1, NULL, '8.00'),
-(12, 1, 4, NULL, '7.00'),
+(12, 1, 4, NULL, '7.60'),
 (13, 2, 4, NULL, '6.00'),
 (14, 3, 4, NULL, '3.00'),
 (15, 4, 4, NULL, '9.00'),
@@ -456,7 +465,7 @@ INSERT INTO `DisciplinaAvaliacao` (`idDisciplinaAvaliacao`, `idMatriculaDiscipli
 (19, 8, 4, NULL, '8.00'),
 (20, 9, 4, NULL, '8.00'),
 (21, 10, 4, NULL, '8.00'),
-(22, 1, 5, NULL, '7.00'),
+(22, 1, 5, NULL, '8.40'),
 (23, 2, 5, NULL, '7.00'),
 (24, 3, 5, NULL, '4.00'),
 (25, 4, 5, NULL, '8.00'),
@@ -466,7 +475,7 @@ INSERT INTO `DisciplinaAvaliacao` (`idDisciplinaAvaliacao`, `idMatriculaDiscipli
 (29, 8, 5, NULL, '5.00'),
 (30, 9, 5, NULL, '8.00'),
 (31, 10, 5, NULL, '8.00'),
-(32, 11, 1, NULL, '4.00'),
+(32, 11, 1, NULL, '8.00'),
 (33, 11, 4, NULL, '7.00'),
 (34, 11, 5, NULL, '5.00');
 
@@ -506,13 +515,7 @@ INSERT INTO `Disciplina_Grade` (`idDisciplina_Grade`, `chSemanal`, `minutosAula`
 (3, NULL, NULL, NULL, NULL, 4, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (4, NULL, NULL, NULL, NULL, 5, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (5, NULL, NULL, NULL, NULL, 6, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, NULL, NULL, NULL, NULL, 1, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(7, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(8, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(9, NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(10, NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(11, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(12, NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(6, NULL, NULL, NULL, NULL, 1, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -719,7 +722,8 @@ CREATE TABLE `Funcionario` (
 --
 
 INSERT INTO `Funcionario` (`idFuncionario`, `nome`, `cpf`, `sexo`, `dataNascimento`, `endereco`, `numero`, `bairro`, `complemento`, `cep`, `email`, `numDocumento`, `orgaoEmissor`, `uf`, `dataEmissao`, `tituloEleitor`, `tituloZona`, `tituloSecao`, `pis`, `npai`, `nmae`, `conjuge`, `admissao`, `turnoMat`, `turnoVes`, `turnoNot`, `cargaHoraria`, `salBase`, `dataDemissao`, `professor`, `horasAula`, `horasCoordenacao`, `chSemanal`, `chTotal`, `idTipoEndereco`, `foto`, `idCidEndereco`, `idTipoDocumento`, `idCidNatural`, `idNacionalidade`, `idEstadoCivil`, `idTipoAdmissao`, `idSituacaoFuncional`, `idMotivoDemissao`, `idUsuario`) VALUES
-(1, 'Yuri', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
+(1, 'Yuri', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2),
+(2, 'Joao', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -738,12 +742,12 @@ CREATE TABLE `GradeCurricular` (
 --
 
 INSERT INTO `GradeCurricular` (`idGrade`, `descricao`, `idCurso`) VALUES
-(1, NULL, NULL),
-(2, NULL, NULL),
-(3, NULL, NULL),
-(4, NULL, NULL),
-(5, NULL, NULL),
-(6, NULL, NULL);
+(1, NULL, 1),
+(2, NULL, 2),
+(3, NULL, 3),
+(4, NULL, 2),
+(5, NULL, 4),
+(6, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -783,13 +787,13 @@ CREATE TABLE `Horario` (
 
 INSERT INTO `Horario` (`idHorario`, `seg`, `ter`, `qua`, `qui`, `sex`, `sab`, `dom`, `inicio`, `fim`, `idTurno`) VALUES
 (1, 1, NULL, 1, NULL, NULL, NULL, NULL, '7:30', '9:00', 1),
-(2, NULL, 1, 1, NULL, NULL, NULL, NULL, '7:30', '9:00', 1),
-(3, 1, 1, NULL, NULL, NULL, 1, NULL, '7:30', '9:00', 1),
-(4, 1, NULL, NULL, NULL, NULL, 1, 1, '7:30', '9:00', 1),
-(5, 1, NULL, NULL, NULL, NULL, 1, 1, '13:30', '18:30', 2),
+(2, NULL, 1, 1, NULL, NULL, NULL, NULL, '9:00', '10:50', 1),
+(3, 1, 1, NULL, NULL, NULL, 1, NULL, '11:00', '12:40', 1),
+(4, 1, NULL, NULL, NULL, NULL, 1, 1, '13:30', '14:50', 2),
+(5, 1, NULL, NULL, NULL, NULL, 1, 1, '15:00', '16:40', 2),
 (6, NULL, 1, NULL, NULL, NULL, 1, NULL, '13:30', '18:30', 2),
-(7, NULL, 1, NULL, 1, NULL, 1, NULL, '13:30', '18:30', 2),
-(8, NULL, NULL, 1, NULL, NULL, NULL, NULL, '13:30', '18:30', 2);
+(7, NULL, 1, NULL, 1, NULL, 1, NULL, '16:40', '17:30', 2),
+(8, NULL, NULL, 1, NULL, NULL, NULL, NULL, '17:30', '18:30', 2);
 
 -- --------------------------------------------------------
 
@@ -812,28 +816,14 @@ CREATE TABLE `HorarioTurma` (
 --
 
 INSERT INTO `HorarioTurma` (`idHorarioTurma`, `diaSemana`, `idTurma`, `idHorario`, `idDisciplina_Grade`, `idFuncionario`, `idSalaTurma`) VALUES
-(1, 1, 2, NULL, 6, 1, NULL),
-(2, 2, 3, NULL, 3, 1, NULL),
-(3, 3, 1, NULL, 2, 1, NULL),
-(4, 4, 4, NULL, 3, 1, NULL),
-(5, 5, 6, NULL, 2, 1, NULL),
-(6, 1, 3, NULL, 3, 1, NULL),
-(7, 1, 4, NULL, 1, 1, NULL),
-(8, 6, 2, NULL, 2, 1, NULL),
-(9, 3, 7, NULL, 12, 1, NULL),
-(10, 2, 5, NULL, 11, 1, NULL),
-(11, 0, 1, 1, 1, 1, NULL),
-(12, 0, 1, 1, 1, 1, NULL),
-(13, 1, 1, 3, 1, 1, NULL),
-(14, 2, 1, 1, 1, 1, NULL),
-(15, 0, 3, 3, 3, 1, NULL),
-(16, 3, 5, 3, 4, 1, NULL),
-(17, 0, 3, 3, 3, 1, NULL),
-(18, 4, 5, 3, 4, 1, NULL),
-(19, 4, 4, 2, 1, 1, NULL),
-(20, 0, 6, 2, 6, 1, NULL),
-(21, 4, 4, 2, 1, 1, NULL),
-(22, 0, 5, 2, 6, 1, NULL);
+(1, 1, 2, 1, 2, 1, NULL),
+(2, 2, 3, 2, 3, 1, NULL),
+(3, 3, 1, 7, 1, 2, NULL),
+(4, 4, 4, 3, 4, 1, NULL),
+(5, 5, 6, 4, 6, 1, NULL),
+(6, 1, 3, 8, 3, 2, NULL),
+(7, 1, 4, 1, 4, 2, NULL),
+(8, 6, 2, 2, 2, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -1683,13 +1673,12 @@ CREATE TABLE `Turma` (
 --
 
 INSERT INTO `Turma` (`idTurma`, `descricao`, `multisseriada`, `maxAlunos`, `numMatriculados`, `idGrade`, `idFuncionario`, `idPeriodo`, `idTurno`) VALUES
-(1, 'A', NULL, NULL, 10, 1, 1, 1, 1),
-(2, 'B', NULL, NULL, 10, 2, 1, 1, 2),
-(3, 'C', NULL, NULL, 5, 3, 1, 1, 2),
+(1, '4º Ano', NULL, NULL, 10, 1, 1, 1, 1),
+(2, '1º Ano', NULL, NULL, 10, 2, 1, 1, 2),
+(3, '9º Ano', NULL, NULL, 5, 3, 1, 1, 2),
 (4, '5ª Série A', NULL, NULL, NULL, 4, 1, 1, 1),
 (5, '7ª Série C', NULL, NULL, NULL, 5, 1, 1, 1),
-(6, '8ª Série B', NULL, NULL, NULL, 6, 1, 1, 1),
-(7, '6ª Série C', NULL, NULL, NULL, NULL, 1, 1, 1);
+(6, '8ª Série B', NULL, NULL, NULL, 6, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1794,7 +1783,8 @@ CREATE TABLE `Usuario` (
 --
 
 INSERT INTO `Usuario` (`idUsuario`, `nomeUsuario`, `senha`, `tipoUsuario`, `idAparencia`) VALUES
-(2, 'yurisilva', '123456', 1, NULL);
+(2, 'yurisilva', '123456', 1, NULL),
+(3, 'joao', '123456', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -2709,7 +2699,7 @@ ALTER TABLE `Cor`
 -- AUTO_INCREMENT for table `Curso`
 --
 ALTER TABLE `Curso`
-  MODIFY `idCurso` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCurso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `CursoAnterior`
 --
@@ -2814,7 +2804,7 @@ ALTER TABLE `Frase`
 -- AUTO_INCREMENT for table `Funcionario`
 --
 ALTER TABLE `Funcionario`
-  MODIFY `idFuncionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idFuncionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `GradeCurricular`
 --
@@ -2834,7 +2824,7 @@ ALTER TABLE `Horario`
 -- AUTO_INCREMENT for table `HorarioTurma`
 --
 ALTER TABLE `HorarioTurma`
-  MODIFY `idHorarioTurma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `idHorarioTurma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `Hospital`
 --
@@ -3154,7 +3144,7 @@ ALTER TABLE `UnidFunc`
 -- AUTO_INCREMENT for table `Usuario`
 --
 ALTER TABLE `Usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `Vacina`
 --
