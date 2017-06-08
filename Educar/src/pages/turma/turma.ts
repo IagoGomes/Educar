@@ -26,6 +26,7 @@ export class Turma {
   alunos         : Array <any>;
   notas          : Array <any>;
   ns          : Array <number>;
+  nota : any;
   media : any;
   numNotas: any;
   /*controles*/
@@ -48,6 +49,8 @@ export class Turma {
  
     this.media = 0;
     this.numNotas =0; 
+
+    this.nota=0;
 
     this.atualizarInformacoesTurma();
     this.atualizarListaAlunos();         
@@ -83,7 +86,7 @@ export class Turma {
   }//fim mudarCorFab
   /*para mudar a cor da média do aluno*/ 
   mudarCorMedia(media : any){
- 	return (parseFloat(media) >= 7) ? "badgeAprovado" : ((parseFloat(media)>=0) ? 'badgeReprovado' : 'badgeSemResultado');
+ 	return (parseFloat(media) >= 70) ? "badgeAprovado" : ((parseFloat(media)>=0) ? 'badgeReprovado' : 'badgeSemResultado');
   }//fim mudarCorMedia
   /*atualiza o card infos da disciplina*/
   atualizarInformacoesTurma(){
@@ -119,14 +122,15 @@ export class Turma {
                    for(let aluno of this.alunos){
 	                   for(let nota of this.notas){
 	                   		if(nota.idAluno == aluno.idAluno){
-	                   				this.ns.push(nota);
+                                                        nota.nota = parseFloat(nota.nota)*10;
 	                   				this.media=  parseFloat(this.media) + parseFloat(nota.nota);
 	                   				this.numNotas = parseFloat(this.numNotas) + 1;
+	                   				this.ns.push(nota);
 	                   		}
 	                   }
 	                   aluno.nota = this.ns;
 	                   this.media=parseFloat(this.media)/parseFloat(this.numNotas);
-	                   aluno.media = this.roundNumber(this.media, 2);
+	                   aluno.media = this.roundNumber(this.media, 0);
 	                   this.numNotas =0;
 	                   this.media=0;
 	                   this.ns = [];
@@ -142,7 +146,8 @@ export class Turma {
 
   mudarNota(nota:any, aluno:any){
   	aluno.modificando=true;
-  	this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/mudarNota/?idDisciplinaAvaliacao='+nota.idDisciplinaAvaliacao+'&nota='+nota.nota)
+        this.nota = parseFloat(nota.nota)/10;
+  	this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/mudarNota/?idDisciplinaAvaliacao='+nota.idDisciplinaAvaliacao+'&nota='+this.nota)
 		.map(res => res.json()).subscribe(data => {
              this.media=0;
              this.numNotas =0;
@@ -151,7 +156,7 @@ export class Turma {
                 this.numNotas=parseFloat(this.numNotas) + 1;
              }
              this.media=parseFloat(this.media)/parseFloat(this.numNotas);
-             aluno.media=this.roundNumber(this.media,2);
+             aluno.media=this.roundNumber(this.media,0);
              this.media=0;
              this.numNotas=0;
 		});
@@ -159,7 +164,6 @@ export class Turma {
   }//fim mudarNota
 
   roundNumber(num, scale) {
-	  //return (Math.round(parseFloat(num)*10*parseFloat(scale))/(10*parseFloat(scale)));
 	  return parseFloat(num).toFixed(scale);
   }//fim roundNumber
 

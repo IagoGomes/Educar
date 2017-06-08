@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => '192.168.0.150',
 	'username' => 'educar',
 	'password' => 'educar123',
 	// 'hostname' => 'siac.uesb.br',

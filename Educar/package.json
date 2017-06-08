@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
+  "name": "com.br.educar",
   "version": "0.0.0",
-  "author": "Ionic Framework",
+  "author": "Brunna, Iago, Jonas, Matheus, Lima, Yan, Yuri",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
@@ -45,5 +45,5 @@
     "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [],
-  "description": "Educar: An Ionic project"
+  "description": "Educar"
 }
