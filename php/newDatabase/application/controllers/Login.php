@@ -39,7 +39,7 @@ class Login extends REST_Controller {
 		    $this->response($users, REST_Controller::HTTP_OK);        
 		}
 		else {
-		    $result = [array('username'=> false, 'password'=> false)];
+		    $result = [array('idFuncionario'=> false,'nomeUsuario'=> false)];
 		    $this->response($result, REST_Controller::HTTP_OK);
 		}
 

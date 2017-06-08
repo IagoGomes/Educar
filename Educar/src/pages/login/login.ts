@@ -24,14 +24,14 @@ export class Login {
 
 	users: Array<any>;
 	account: {username: string, password: string} = {
-		username:'joaosantos',
+		username:'joao',
 		password: '123456'
 	};
 	idUser: any;
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, 
 		public toastCtrl: ToastController, public http: Http,
-		 public loadingCtrl: LoadingController) {
+		public loadingCtrl: LoadingController) {
   	}
 
 	doLogin(){
@@ -40,12 +40,16 @@ export class Login {
 		//console.log(this.account.password);		
 		this.http.get('http://localhost/Educar/php/newDatabase/index.php/Login/db/?username='+this.account.username+'&password='+this.account.password)
 		.map(res => res.json())
-		.subscribe(data => 	this.navCtrl.setRoot(Horario,
-			{username: this.account.username,
-			 idFuncionario: data.idFuncionario}));
-			// this.navCtrl.push(Horario,
-			// {username: this.account.username,
-			//  teste: data}));
+		.subscribe(data =>{
+                        if(!data.idFuncionario){
+                           
+alert("Usuário Inexistente");
+			}
+                        else{
+			    this.navCtrl.setRoot(Horario, {username: data.nomeUsuario, idFuncionario: data.idFuncionario});
+                        }
+		});
+
 	}
 
 }
