@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 
+import { Turma } from '../turma/turma';
+
 /**
  * Generated class for the Horario page.
  *
@@ -14,6 +16,7 @@ import { Http } from '@angular/http';
   templateUrl: 'horario.html',
 })
 export class Horario {
+   discipline: {diaSemana: string, disciplina:string, idTurma: number,idDisciplina_Grade:number, escola:string,inicio:string,fim:string,}
    disciplines = [
        {name:"Portugues", place: "UESB", class:"Sétimo ano", time: "8h30 - 9h30"},
        {name:"Portugues", place: "UESB", class:"Sétimo ano", time: "8h30 - 9h30"}];
@@ -27,7 +30,6 @@ export class Horario {
     //console.log(this.navParams.get('username'));
     //console.log(this.navParams.get('idFuncionario'));
     this.idFuncionario = this.navParams.get('idFuncionario');
-
     this.http.get('http://localhost/Educar/php/newDatabase/index.php/Horario/disciplinas/?idFuncionario='+this.idFuncionario)
     .map(res => res.json()).subscribe(data => {
       this.names = data;
@@ -36,8 +38,10 @@ export class Horario {
   }
       
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad Horario');
+  abrirTurma(discipline){
+    this.navCtrl.push(Turma, {
+      idDisciplina: discipline.idDisciplina_Grade,
+      idTurma: discipline.idTurma});
   }
 
  
