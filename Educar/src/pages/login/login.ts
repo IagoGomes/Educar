@@ -43,7 +43,7 @@ export class Login {
 		.subscribe(data =>{
                         if(!data.idFuncionario){
                            
-alert("Usuário Inexistente");
+					this.presentToast();
 			}
                         else{
 			    this.navCtrl.setRoot(Horario, {username: data.nomeUsuario, idFuncionario: data.idFuncionario});
@@ -52,4 +52,11 @@ alert("Usuário Inexistente");
 
 	}
 
+   presentToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Usuário incorreto',
+      duration: 3000
+    });
+    toast.present();
+  }
 }

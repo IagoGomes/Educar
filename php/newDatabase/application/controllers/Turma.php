@@ -40,7 +40,7 @@ class Turma extends REST_Controller {
 		    $this->response($turma, REST_Controller::HTTP_OK);        
 		}
 		else {
-		    $result = [array('idTurma'=> false, 'idDisciplina'=>false)];
+		    $result = [array('sala'=> false, 'nome'=>false, 'disciplina'=>false, 'unidadeEscolar'=>false)];
 		    $this->response($result, REST_Controller::HTTP_OK);
 		}
 
@@ -60,7 +60,7 @@ class Turma extends REST_Controller {
 		}
 
 		else {
-		    $result = [array('idTurma'=> false, 'idDisciplina'=>false)];
+		    $result = 0;
 		    $this->response($result, REST_Controller::HTTP_OK);
 		}
 

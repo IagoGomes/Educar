@@ -4,8 +4,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Turma_Model extends CI_Model {
 
     public function turma_infos($idTurma, $idDisciplina){
+        /*
+            SELECT t.descricao as nome, s.numero as sala, d.nome as disciplina, u.nome as unidadeEscolar 
+            FROM Turma t, Sala s, SalaTurma st, Disciplina d, Disciplina_Grade dg, UnidadeEscolar u
+            WHERE t.idTurma=4 and st.idTurma=4 and st.idSala=s.idSala and t.idGrade=dg.idGrade and 
+            dg.idDisciplina_Grade = 2 and dg.idDisciplina = d.idDisciplina and s.idUnidadeEscolar = u.idUnidadeEscolar
+
+        */
 		$this->db->select('t.descricao as nome');
-		$this->db->select('t.numMatriculados as quantAlunos');
 		$this->db->select('s.numero as sala');
 		$this->db->select('d.nome as disciplina');
 		$this->db->select('u.nome as unidadeEscolar');
@@ -21,8 +27,8 @@ class Turma_Model extends CI_Model {
 		$this->db->where("st.idTurma", $idTurma);
 		$this->db->where("st.idSala = s.idSala");
 		$this->db->where("t.idGrade = dg.idGrade");
-		$this->db->where("d.idDisciplina",$idDisciplina);
-		$this->db->where("dg.idDisciplina", $idDisciplina);
+		$this->db->where("dg.idDisciplina_Grade", $idDisciplina);
+		$this->db->where("dg.idDisciplina = d.idDisciplina");
 		$this->db->where("s.idUnidadeEscolar = u.idUnidadeEscolar");
 
 		$turma = $this->db->get("Turma");

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 
+import { Turma } from '../turma/turma';
+
 /**
  * Generated class for the Horario page.
  *
@@ -14,12 +16,11 @@ import { Http } from '@angular/http';
   templateUrl: 'horario.html',
 })
 export class Horario {
-   disciplines = [
-       {name:"Portugues", place: "UESB", class:"Sétimo ano", time: "8h30 - 9h30"},
-       {name:"Portugues", place: "UESB", class:"Sétimo ano", time: "8h30 - 9h30"}];
-   name = "Uau";
-   
-   names = ["Primeiro", "Segundo", "Terceiro"];
+   disciplines: Array<any>;
+   dias : Array<any>;
+   numDia:number;
+   escolas : Array<any>;
+   numEscola : any;
    idFuncionario: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
@@ -27,17 +28,63 @@ export class Horario {
     //console.log(this.navParams.get('username'));
     //console.log(this.navParams.get('idFuncionario'));
     this.idFuncionario = this.navParams.get('idFuncionario');
-
-    this.http.get('http://localhost/Educar/php/newDatabase/index.php/Horario/disciplinas/?idFuncionario='+this.idFuncionario)
-    .map(res => res.json()).subscribe(data => {
-      this.names = data;
-      console.log(data);
-    });    
+    this.numDia=0;
+    this.dias=[];
+    this.numEscola="";
+    this.escolas = [];
+    this.atualizarHorario();
   }
       
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad Horario');
+  atualizarHorario(){
+    this.http.get('http://localhost/Educar/php/newDatabase/index.php/Horario/disciplinas/?idFuncionario='+this.idFuncionario)
+          .map(res => res.json()).subscribe(data => {
+           this.disciplines = data;
+           
+           for(let d of this.disciplines){
+           		if(this.numDia != d.diaSemana){
+           			this.numDia = d.diaSemana;
+           			this.dias.push(this.getDia(d.diaSemana));
+           		}
+           		d.diaSemana = this.getDia(d.diaSemana);
+
+           		if((this.numEscola != d.escola)){
+           			this.numEscola=d.escola;
+           			if(!(this.escolas.indexOf(d.escola)!=-1)){
+           			   this.escolas.push(d.escola);
+           			}
+           	
+           		}
+           }
+           this.numEscola = '1';
+ 		   for(let e of this.escolas){
+ 		   		for(let d of this.disciplines){
+ 		   			if(e == d.escola){
+                         d.iconEscola='assets/img/e'+this.numEscola+'.png';
+ 		   			} 		   			
+ 		   		}
+ 		   		this.numEscola = ""+(parseInt(this.numEscola)+1)%6;
+ 		   }
+           console.log(data);
+    });    
+
+  }    
+
+  getDia(idDia:any){
+        switch(idDia){
+        	case '0': return "Domingo";
+        	case '1': return "Segunda-Feira";
+			case '2': return "Terça-Feira";
+			case '3': return "Quarta-Feira";
+			case '4': return "Quinta-Feira";
+			case '5': return "Sexta-Feira";
+			case '6': return "Sábado";
+        }
+  }
+  abrirTurma(discipline){
+    this.navCtrl.push(Turma, {
+      idDisciplina: discipline.idDisciplina_Grade,
+      idTurma: discipline.idTurma});
   }
 
  

@@ -1,101 +1,112 @@
 <!--
-  Generated template for the Horario page.
+	Generated template for the Horario page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
+	See http://ionicframework.com/docs/components/#navigation for more info on
+	Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Horário</ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>Horário</ion-title>
+	</ion-navbar>
 </ion-header>
 
-
 <ion-content class="cards-bg">
+    <div *ngFor="let dia of dias">
+		<ion-label class="label">{{dia}}</ion-label>
+		<ion-card>
+			<ion-list *ngFor="let discipline of disciplines">
+				<ion-item  *ngIf="discipline.diaSemana==dia" id="item-card-custom" (click)="abrirTurma(discipline)">
+					<ion-avatar item-left>          
+						<img src="{{discipline.iconEscola}}">
+					</ion-avatar>
+					
+					<h2>{{discipline.disciplina}}</h2>
 
-  <ion-label class="label">Segunda </ion-label>
-  <ion-card>
-    <ion-list >
-      <ion-item *ngFor="let discipline of disciplines" id="item-card-custom">
-        <ion-avatar item-left>          
-          <img src="assets/icon/bookicon.png">
-        </ion-avatar>
-        
-        <h2>{{discipline.name + " - " + discipline.class}}</h2>
+					<h4>{{discipline.inicio+ " - "+discipline.fim+" em "+ discipline.escola}}</h4>
+				</ion-item>
+			</ion-list>
+		</ion-card>
+	</div>
+<!--
+  <ion-label class="label">Terça-feira</ion-label>
+	<ion-card>
+		<ion-list *ngFor="let discipline of names">
+			<ion-item  *ngIf="discipline.diaSemana==2" id="item-card-custom" (click)="abrirTurma(discipline)">
+				<ion-avatar item-left>          
+					<img src="assets/icon/bookicon.png">
+				</ion-avatar>
+				
+				<h2>{{discipline.disciplina}}</h2>
 
-        <h4>{{discipline.time+" em "+ discipline.place}}</h4>
-      </ion-item>
-    </ion-list>
-  </ion-card>
+				<h4>{{discipline.inicio+ " - "+discipline.fim+" em "+ discipline.escola}}</h4>
+			</ion-item>
+		</ion-list>
+	</ion-card>
+
+  <ion-label class="label">Quarta-feira</ion-label>
+	<ion-card>
+		<ion-list *ngFor="let discipline of names">
+			<ion-item  *ngIf="discipline.diaSemana==3" id="item-card-custom" (click)="abrirTurma(discipline)">
+				<ion-avatar item-left>          
+					<img src="assets/icon/bookicon.png">
+				</ion-avatar>
+				
+				<h2>{{discipline.disciplina}}</h2>
+
+				<h4>{{discipline.inicio+ " - "+discipline.fim+" em "+ discipline.escola}}</h4>
+			</ion-item>
+		</ion-list>
+	</ion-card>
+
+<ion-label class="label">Quinta-feira</ion-label>
+	<ion-card>
+		<ion-list *ngFor="let discipline of names">
+			<ion-item  *ngIf="discipline.diaSemana==4" id="item-card-custom" (click)="abrirTurma(discipline)">
+				<ion-avatar item-left>          
+					<img src="assets/icon/bookicon.png">
+				</ion-avatar>
+				
+				<h2>{{discipline.disciplina}}</h2>
+
+				<h4>{{discipline.inicio+ " - "+discipline.fim+" em "+ discipline.escola}}</h4>
+			</ion-item>
+		</ion-list>
+	</ion-card>		
+
+<ion-label class="label">Sexta-feira</ion-label>
+	<ion-card>
+		<ion-list *ngFor="let discipline of names">
+			<ion-item  *ngIf="discipline.diaSemana==5" id="item-card-custom" (click)="abrirTurma(discipline)">
+				<ion-avatar item-left>          
+					<img src="assets/icon/bookicon.png">
+				</ion-avatar>
+				
+				<h2>{{discipline.disciplina}}</h2>
+
+				<h4>{{discipline.inicio+ " - "+discipline.fim+" em "+ discipline.escola}}</h4>
+			</ion-item>
+		</ion-list>
+	</ion-card>
+
+<ion-label class="label">Sábado</ion-label>
+	<ion-card>
+		<ion-list *ngFor="let discipline of names">
+			<ion-item  *ngIf="discipline.diaSemana==6" id="item-card-custom" (click)="abrirTurma(discipline)">
+				<ion-avatar item-left>          
+					<img src="assets/icon/bookicon.png">
+				</ion-avatar>
+				
+				<h2>{{discipline.disciplina}}</h2>
+
+				<h4>{{discipline.inicio+ " - "+discipline.fim+" em "+ discipline.escola}}</h4>
+			</ion-item>
+		</ion-list>
+	</ion-card>-->
 
 
-
-  <ion-label class="label">Terça </ion-label>
-    <ion-card>
-      <ion-list >
-        <ion-item *ngFor="let discipline of disciplines" id="item-card-custom"> 
-          <ion-avatar item-left>          
-            <img src="assets/icon/bookicon.png">
-          </ion-avatar>
-
-          <h2>{{discipline.name + " - " + discipline.class}}</h2>
-
-          <h4>{{discipline.time+" em "+ discipline.place}}</h4>
-        </ion-item>
-      </ion-list>
-    </ion-card>
-
-
-
-  <ion-label class="label">Quarta </ion-label>
-    <ion-card>
-      <ion-list >
-        <ion-item *ngFor="let discipline of disciplines" id="item-card-custom">
-          <ion-avatar item-left>          
-            <img src="assets/icon/bookicon.png">
-          </ion-avatar>
-
-          <h2>{{discipline.name + " - " + discipline.class}}</h2>
-
-          <h4>{{discipline.time+" em "+ discipline.place}}</h4>
-        </ion-item>
-      </ion-list>
-    </ion-card>
-
- 
-  <ion-label class="label">Quinta </ion-label>
-    <ion-card>
-      <ion-list >
-        <ion-item *ngFor="let discipline of disciplines" id="item-card-custom">
-          <ion-avatar item-left>          
-            <img src="assets/icon/bookicon.png">
-          </ion-avatar>
-
-          <h2>{{discipline.name + " - " + discipline.class}}</h2>
-
-          <h4>{{discipline.time+" em "+ discipline.place}}</h4>
-        </ion-item>
-      </ion-list>
-    </ion-card>
-
-
-  <ion-label class="label">Sexta </ion-label>
-    <ion-card>
-      <ion-list >
-        <ion-item *ngFor="let discipline of disciplines" id="item-card-custom">
-          <ion-avatar item-left>          
-            <img src="assets/icon/bookicon.png">
-          </ion-avatar>
-
-          <h2>{{discipline.name + " - " + discipline.class}}</h2>
-
-          <h4>{{discipline.time+" em "+ discipline.place}}</h4>
-        </ion-item>
-      </ion-list>
-    </ion-card>
  
 
 

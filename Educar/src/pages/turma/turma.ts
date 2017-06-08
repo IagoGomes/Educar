@@ -37,7 +37,7 @@ export class Turma {
   titulo              :string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
-	this.unidadeEscolar = " ";
+	  this.unidadeEscolar = " ";
     this.sala = " ";
     this.disciplina = " ";
     this.quant_alunos = 0;
@@ -52,8 +52,12 @@ export class Turma {
 
     this.nota=0;
 
+    this.idTurma = this.navParams.get('idTurma');
+    this.idDisciplina = this.navParams.get('idDisciplina');
+
+
     this.atualizarInformacoesTurma();
-    this.atualizarListaAlunos();         
+    
   }//fim constructor
   
   ionViewDidLoad() {
@@ -91,22 +95,25 @@ export class Turma {
   /*atualiza o card infos da disciplina*/
   atualizarInformacoesTurma(){
        console.log(this.idTurma);		
-       this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/turmaInfos/?idTurma='+1+'&idDisciplina='+1)
+       this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/turmaInfos/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
 		.map(res => res.json()).subscribe(data => {
                    this.sala=data.sala; 
                    this.disciplina=data.disciplina;
                    this.titulo=data.nome;
                    this.unidadeEscolar=data.unidadeEscolar;
                 });
-		this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/quantAlunos/?idTurma='+1+'&idDisciplina='+1)
+		this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/quantAlunos/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
 		.map(res => res.json()).subscribe(data => {
                    this.quant_alunos=data; 
+                   if(parseFloat(this.quant_alunos) > 0){
+                      this.atualizarListaAlunos();         
+                    }
                 });
 
   }//fim atualizarInformacoesTurma
   /*atualiza a lista de alunos*/
   atualizarListaAlunos(){
-  	this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/getAlunos/?idTurma='+1+'&idDisciplina='+1)
+  	this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/getAlunos/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
 		.map(res => res.json()).subscribe(data => {
                    this.alunos=data;
                    for(let aluno of this.alunos){
@@ -116,7 +123,7 @@ export class Turma {
                    }
              });
     
-    this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/getNotas/?idTurma='+1+'&idDisciplina='+1)
+    this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/getNotas/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
 		.map(res => res.json()).subscribe(data => {
                    this.notas=data;
                    for(let aluno of this.alunos){

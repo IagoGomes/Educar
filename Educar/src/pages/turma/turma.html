@@ -27,6 +27,7 @@
 	</ion-card-content>
   </ion-card>
   <h5> Discentes </h5>
+  <p *ngIf="quant_alunos<=0"> não há alunos matriculados na disciplina </p>
 	<ion-card *ngFor="let aluno of alunos" (click)="itemSelected(aluno)" >
 		<ion-item id="item-card-custom">
 			<ion-avatar item-left>
