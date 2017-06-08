@@ -20,9 +20,15 @@ export class Horario {
    name = "Uau";
    
    names = ["Primeiro", "Segundo", "Terceiro"];
+   idFuncionario: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
-    this.http.get('http://localhost/Educar/php/newDatabase/index.php/Horario/disciplinas/?idUser='+2)
+    
+    //console.log(this.navParams.get('username'));
+    //console.log(this.navParams.get('idFuncionario'));
+    this.idFuncionario = this.navParams.get('idFuncionario');
+
+    this.http.get('http://localhost/Educar/php/newDatabase/index.php/Horario/disciplinas/?idFuncionario='+this.idFuncionario)
     .map(res => res.json()).subscribe(data => {
       this.names = data;
       console.log(data);

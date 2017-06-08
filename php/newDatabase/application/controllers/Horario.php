@@ -11,9 +11,9 @@ class Horario extends REST_Controller {
 	}
 
 	public function disciplinas_get(){
-		$idUser = $this->get('idUser');
+		$idFuncionario = $this->get('idFuncionario');
 		$this->load->model("horario_model");
-		$result = $this->horario_model->getDisciplines($idUser)->result_array();
+		$result = $this->horario_model->getDisciplines($idFuncionario)->result_array();
 
 		if($result){
 			$this->response($result, REST_Controller::HTTP_OK);

@@ -3,11 +3,11 @@
  
  class Horario_model extends CI_Model {
  
-  public function getDisciplines($idUser){
-   $this->db->select('Turma.idTurma');
-   $this->db->where("idUsuario", $idUser);
-   $this->db->join('Turma', 'Turma.idFuncionario = Funcionario.idFuncionario');
-   $user = $this->db->get("Funcionario");
+  public function getDisciplines($idFuncionario){
+   $this->db->select('idTurma');
+   $this->db->where("idFuncionario", $idFuncionario);
+   //$this->db->join('Turma', 'Turma.idFuncionario = Funcionario.idFuncionario');
+   $user = $this->db->get("Turma");
    return $user;
   }
 }

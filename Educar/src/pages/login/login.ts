@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Horario } from '../horario/horario';
@@ -18,6 +18,7 @@ import { Horario } from '../horario/horario';
   templateUrl: 'login.html',
 })
 export class Login {
+	@ViewChild(Nav) nav: Nav;
 	//contentPage  = ContentPage;
 
 
@@ -35,13 +36,16 @@ export class Login {
 
 	doLogin(){
 
-		console.log(this.account.username);
-		console.log(this.account.password);		
+		//console.log(this.account.username);
+		//console.log(this.account.password);		
 		this.http.get('http://localhost/Educar/php/newDatabase/index.php/Login/db/?username='+this.account.username+'&password='+this.account.password)
 		.map(res => res.json())
-		.subscribe(data => 	this.navCtrl.push(Horario,
+		.subscribe(data => 	this.navCtrl.setRoot(Horario,
 			{username: this.account.username,
-			 teste: data}));
-
+			 idFuncionario: data.idFuncionario}));
+			// this.navCtrl.push(Horario,
+			// {username: this.account.username,
+			//  teste: data}));
 	}
+
 }
