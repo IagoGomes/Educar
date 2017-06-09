@@ -37,7 +37,7 @@ export class Horario {
       
 
   atualizarHorario(){
-    this.http.get('http://localhost/Educar/php/newDatabase/index.php/Horario/disciplinas/?idFuncionario='+this.idFuncionario)
+    this.http.get('http://192.168.0.150/Educar/php/newDatabase/index.php/Horario/disciplinas/?idFuncionario='+this.idFuncionario)
           .map(res => res.json()).subscribe(data => {
            this.disciplines = data;
            
