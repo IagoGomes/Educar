@@ -118,7 +118,6 @@ export class Turma {
   }//fim atualizarInformacoesTurma
   /*atualiza a lista de alunos*/
   atualizarListaAlunos(){
-
   	this.http.get('http://192.168.0.150/Educar/php/newDatabase/index.php/Turma/getAlunos/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
 		.map(res => res.json()).subscribe(data => {
                    this.alunos=data;
@@ -187,7 +186,4 @@ export class Turma {
         }
   }
 
-  presentLoading() {
-    
-  }
 }
