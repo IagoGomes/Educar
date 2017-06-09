@@ -82,7 +82,8 @@ export class Turma {
   }//fim itemSelected
   /*quando o fab é selecionado*/
   fabLancarNota(){
-      this.habilitarLancarNota = !this.habilitarLancarNota;
+     if(this.quant_alunos > 0)
+        this.habilitarLancarNota = !this.habilitarLancarNota;
   }//fim fabLancarNota
   /*para mudar a cor do fab quando selecionado*/
   mudarCorFab(){	

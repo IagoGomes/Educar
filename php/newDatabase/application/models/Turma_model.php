@@ -66,6 +66,11 @@ class Turma_Model extends CI_Model {
     }
 
     public function get_notas_alunos($idTurma, $idDisciplina){
+
+        /**
+
+SELECT a.ordem as ordem,da.idDisciplinaAvaliacao as idDisciplinaAvaliacao, al.idAluno as idAluno, m.idMatricula as matricula, da.nota as nota FROM Avaliacao a, Matricula m, Aluno al, MatriculaDisciplina md, DisciplinaAvaliacao da WHERE m.idTurma=2 and m.idAluno = al.idAluno and md.idDisciplina_Grade=2 and md.idMatricula = m.idMatricula and da.idMatriculaDisciplina = md.idMatriculaDisciplina and da.idAvaliacao = a.id
+        */
     	$this->db->select('a.ordem as ordem');
     	$this->db->select('da.idDisciplinaAvaliacao as idDisciplinaAvaliacao');
     	$this->db->select('al.idAluno as idAluno');

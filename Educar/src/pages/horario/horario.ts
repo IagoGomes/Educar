@@ -81,7 +81,7 @@ export class Horario {
 			case '6': return "Sábado";
         }
   }
-  abrirTurma(discipline){
+  abrirTurma(discipline:any){
     this.navCtrl.push(Turma, {
       idDisciplina: discipline.idDisciplina_Grade,
       idTurma: discipline.idTurma});
