@@ -18,10 +18,6 @@ import { Horario } from '../horario/horario';
   templateUrl: 'login.html',
 })
 export class Login {
-	@ViewChild(Nav) nav: Nav;
-	//contentPage  = ContentPage;
-
-
 	users: Array<any>;
 	account: {username: string, password: string} = {
 		username:'joao',
@@ -34,10 +30,7 @@ export class Login {
 		public loadingCtrl: LoadingController) {
   	}
 
-	doLogin(){
-
-		//console.log(this.account.username);
-		//console.log(this.account.password);		
+	doLogin(){		
 		this.http.get('http://192.168.0.150/Educar/php/newDatabase/index.php/Login/db/?username='+this.account.username+'&password='+this.account.password)
 		.map(res => res.json())
 		.subscribe(data =>{

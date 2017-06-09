@@ -61,9 +61,7 @@ export class Turma {
     
   }//fim constructor
   
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad Turma');
-  }//fim ionViewDidLoad
+
 
   /*quando um card de aluno é selecionado*/
   itemSelected(aluno: any) {
@@ -189,7 +187,4 @@ export class Turma {
         }
   }
 
-  presentLoading() {
-    
-  }
 }
