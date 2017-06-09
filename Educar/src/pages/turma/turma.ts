@@ -160,7 +160,9 @@ export class Turma {
         this.nota = parseFloat(nota.nota)/10;
   	this.http.get('http://192.168.0.150/Educar/php/newDatabase/index.php/Turma/mudarNota/?idDisciplinaAvaliacao='+nota.idDisciplinaAvaliacao+'&nota='+this.nota)
 		.map(res => res.json()).subscribe(data => {
-             this.media=0;
+           
+		});
+      this.media=0;
              this.numNotas =0;
              for(let n of aluno.nota){
                 this.media=parseFloat(this.media) + parseFloat(n.nota);
@@ -170,7 +172,6 @@ export class Turma {
              aluno.media=this.roundNumber(this.media,0);
              this.media=0;
              this.numNotas=0;
-		});
 
   }//fim mudarNota
 
