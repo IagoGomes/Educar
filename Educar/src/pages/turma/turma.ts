@@ -96,14 +96,14 @@ export class Turma {
   /*atualiza o card infos da disciplina*/
   atualizarInformacoesTurma(){
        console.log(this.idTurma);		
-       this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/turmaInfos/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
+       this.http.get('http://192.168.0.150/Educar/php/newDatabase/index.php/Turma/turmaInfos/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
 		.map(res => res.json()).subscribe(data => {
                    this.sala=data.sala; 
                    this.disciplina=data.disciplina;
                    this.titulo=data.nome;
                    this.unidadeEscolar=data.unidadeEscolar;
                 });
-		this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/quantAlunos/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
+		this.http.get('http://192.168.0.150/Educar/php/newDatabase/index.php/Turma/quantAlunos/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
 		.map(res => res.json()).subscribe(data => {
                    this.quant_alunos=data; 
                    if(parseFloat(this.quant_alunos) > 0){
@@ -114,7 +114,7 @@ export class Turma {
   }//fim atualizarInformacoesTurma
   /*atualiza a lista de alunos*/
   atualizarListaAlunos(){
-  	this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/getAlunos/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
+  	this.http.get('http://192.168.0.150/Educar/php/newDatabase/index.php/Turma/getAlunos/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
 		.map(res => res.json()).subscribe(data => {
                    this.alunos=data;
                    for(let aluno of this.alunos){
@@ -124,7 +124,7 @@ export class Turma {
                    }
              });
     
-    this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/getNotas/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
+    this.http.get('http://192.168.0.150/Educar/php/newDatabase/index.php/Turma/getNotas/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
 		.map(res => res.json()).subscribe(data => {
                    this.notas=data;
                    for(let aluno of this.alunos){
@@ -155,7 +155,7 @@ export class Turma {
   mudarNota(nota:any, aluno:any){
   	aluno.modificando=true;
         this.nota = parseFloat(nota.nota)/10;
-  	this.http.get('http://localhost/Educar/php/newDatabase/index.php/Turma/mudarNota/?idDisciplinaAvaliacao='+nota.idDisciplinaAvaliacao+'&nota='+this.nota)
+  	this.http.get('http://192.168.0.150/Educar/php/newDatabase/index.php/Turma/mudarNota/?idDisciplinaAvaliacao='+nota.idDisciplinaAvaliacao+'&nota='+this.nota)
 		.map(res => res.json()).subscribe(data => {
              this.media=0;
              this.numNotas =0;

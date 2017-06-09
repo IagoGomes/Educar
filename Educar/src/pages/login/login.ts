@@ -38,7 +38,7 @@ export class Login {
 
 		//console.log(this.account.username);
 		//console.log(this.account.password);		
-		this.http.get('http://localhost/Educar/php/newDatabase/index.php/Login/db/?username='+this.account.username+'&password='+this.account.password)
+		this.http.get('http://192.168.0.150/Educar/php/newDatabase/index.php/Login/db/?username='+this.account.username+'&password='+this.account.password)
 		.map(res => res.json())
 		.subscribe(data =>{
                         if(!data.idFuncionario){
