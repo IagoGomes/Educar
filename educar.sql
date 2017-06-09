@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 08-Jun-2017 às 21:09
+-- Generation Time: 09-Jun-2017 às 10:48
 -- Versão do servidor: 5.7.18-0ubuntu0.16.04.1
 -- PHP Version: 7.0.15-0ubuntu0.16.04.4
 
@@ -16,6 +16,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+drop database `educar`;
+create database `educar`;
+use `educar`;
+
 --
 -- Database: `educar`
 --
@@ -26,9 +30,10 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `Abrangencia`
 --
 
-CREATE TABLE `Abrangencia` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Abrangencia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -37,9 +42,10 @@ CREATE TABLE `Abrangencia` (
 -- Estrutura da tabela `Alergia`
 --
 
-CREATE TABLE `Alergia` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Alergia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -48,10 +54,13 @@ CREATE TABLE `Alergia` (
 -- Estrutura da tabela `AlergiaAluno`
 --
 
-CREATE TABLE `AlergiaAluno` (
-  `idAlergiaAluno` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `AlergiaAluno` (
+  `idAlergiaAluno` int(11) NOT NULL AUTO_INCREMENT,
   `idAlergia` int(11) NOT NULL,
-  `idAluno` int(11) NOT NULL
+  `idAluno` int(11) NOT NULL,
+  PRIMARY KEY (`idAlergiaAluno`),
+  KEY `fk_Alergia_has_Aluno_Aluno1_idx` (`idAluno`),
+  KEY `fk_Alergia_has_Aluno_Alergia1_idx` (`idAlergia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -60,8 +69,8 @@ CREATE TABLE `AlergiaAluno` (
 -- Estrutura da tabela `Aluno`
 --
 
-CREATE TABLE `Aluno` (
-  `idAluno` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Aluno` (
+  `idAluno` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
   `matricula` varchar(20) NOT NULL,
   `dataCadastro` date DEFAULT NULL,
@@ -118,8 +127,24 @@ CREATE TABLE `Aluno` (
   `idReligiao` int(11) DEFAULT NULL,
   `idSituacaoAluno` int(11) DEFAULT NULL,
   `idTipoTransporte` int(11) DEFAULT NULL,
-  `codigoSeguranca` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `codigoSeguranca` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idAluno`),
+  UNIQUE KEY `matricula_UNIQUE` (`matricula`),
+  KEY `fk_Aluno_Cor1_idx` (`idCor`),
+  KEY `fk_Aluno_TipoEndereco1_idx` (`idTipoEndereco`),
+  KEY `fk_Aluno_Cidade1_idx` (`idCidEndereco`),
+  KEY `fk_Aluno_Cidade2_idx` (`idCidNatural`),
+  KEY `fk_Aluno_Nacionalidade1_idx` (`idNacionalidade`),
+  KEY `fk_Aluno_Profissao1_idx` (`idProfPai`),
+  KEY `fk_Aluno_Profissao2_idx` (`idProfMae`),
+  KEY `fk_Aluno_EstadoCivil1_idx` (`idEstadoCivil`),
+  KEY `fk_Aluno_PlanoSaude1_idx` (`idPlanoSaude`),
+  KEY `fk_Aluno_Hospital1_idx` (`idHospital`),
+  KEY `fk_Aluno_TipoDocumento1_idx` (`idTipoDocumento`),
+  KEY `fk_Aluno_Religiao1_idx` (`idReligiao`),
+  KEY `fk_Aluno_SituacaoAluno1_idx` (`idSituacaoAluno`),
+  KEY `fk_Aluno_TipoTransporte1_idx` (`idTipoTransporte`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `Aluno`
@@ -161,11 +186,12 @@ INSERT INTO `Aluno` (`idAluno`, `nome`, `matricula`, `dataCadastro`, `dataAtuali
 -- Estrutura da tabela `Aparencia`
 --
 
-CREATE TABLE `Aparencia` (
-  `idAparencia` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Aparencia` (
+  `idAparencia` int(11) NOT NULL AUTO_INCREMENT,
   `background` varchar(10) DEFAULT NULL,
   `linear1` varchar(10) DEFAULT NULL,
-  `linear2` varchar(10) DEFAULT NULL
+  `linear2` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`idAparencia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -174,9 +200,10 @@ CREATE TABLE `Aparencia` (
 -- Estrutura da tabela `AproveitamentoEstagio`
 --
 
-CREATE TABLE `AproveitamentoEstagio` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `AproveitamentoEstagio` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -185,14 +212,17 @@ CREATE TABLE `AproveitamentoEstagio` (
 -- Estrutura da tabela `Avaliacao`
 --
 
-CREATE TABLE `Avaliacao` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Avaliacao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ordem` int(11) NOT NULL,
   `descricao` varchar(100) NOT NULL,
   `calculada` tinyint(1) NOT NULL,
   `formula` varchar(100) DEFAULT NULL,
-  `idTipoNota` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idTipoNota` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_Avaliacoes_TipoNota1_idx` (`idTipoNota`),
+  KEY `idTipoNota` (`idTipoNota`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `Avaliacao`
@@ -209,10 +239,11 @@ INSERT INTO `Avaliacao` (`id`, `ordem`, `descricao`, `calculada`, `formula`, `id
 -- Estrutura da tabela `Cargo`
 --
 
-CREATE TABLE `Cargo` (
-  `idCargo` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Cargo` (
+  `idCargo` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) DEFAULT NULL,
-  `professor` tinyint(1) DEFAULT NULL
+  `professor` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`idCargo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -221,14 +252,18 @@ CREATE TABLE `Cargo` (
 -- Estrutura da tabela `CargoFunc`
 --
 
-CREATE TABLE `CargoFunc` (
-  `idCargoFunc` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `CargoFunc` (
+  `idCargoFunc` int(11) NOT NULL AUTO_INCREMENT,
   `inicio` date DEFAULT NULL,
   `termino` date DEFAULT NULL,
   `idCargo` int(11) NOT NULL,
   `idFuncionario` int(11) NOT NULL,
   `idUnidadeEscolar` int(11) DEFAULT NULL,
-  `observacao` varchar(100) DEFAULT NULL
+  `observacao` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idCargoFunc`),
+  KEY `fk_CargoFunc_Cargo1_idx` (`idCargo`),
+  KEY `fk_CargoFunc_Funcionario1_idx` (`idFuncionario`),
+  KEY `fk_CargoFunc_UnidadeEscolar1_idx` (`idUnidadeEscolar`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -237,10 +272,12 @@ CREATE TABLE `CargoFunc` (
 -- Estrutura da tabela `Cidade`
 --
 
-CREATE TABLE `Cidade` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Cidade` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
-  `uf` char(2) NOT NULL
+  `uf` char(2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_Cidade_Estado1_idx` (`uf`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -249,12 +286,14 @@ CREATE TABLE `Cidade` (
 -- Estrutura da tabela `Conceito`
 --
 
-CREATE TABLE `Conceito` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Conceito` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ordem` int(11) NOT NULL,
   `descricao` varchar(500) DEFAULT NULL,
   `idTipoNota` int(11) NOT NULL,
-  `conceito` varchar(50) DEFAULT NULL
+  `conceito` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_Conceito_TipoNota1_idx` (`idTipoNota`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -263,10 +302,11 @@ CREATE TABLE `Conceito` (
 -- Estrutura da tabela `ConceitoEstagio`
 --
 
-CREATE TABLE `ConceitoEstagio` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `ConceitoEstagio` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
-  `aprovado` tinyint(1) DEFAULT NULL
+  `aprovado` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -275,9 +315,10 @@ CREATE TABLE `ConceitoEstagio` (
 -- Estrutura da tabela `Contraida`
 --
 
-CREATE TABLE `Contraida` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Contraida` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -286,10 +327,13 @@ CREATE TABLE `Contraida` (
 -- Estrutura da tabela `ContraidaAluno`
 --
 
-CREATE TABLE `ContraidaAluno` (
-  `idContraidaAluno` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `ContraidaAluno` (
+  `idContraidaAluno` int(11) NOT NULL AUTO_INCREMENT,
   `idContraida` int(11) NOT NULL,
-  `idAluno` int(11) NOT NULL
+  `idAluno` int(11) NOT NULL,
+  PRIMARY KEY (`idContraidaAluno`),
+  KEY `fk_Contraida_has_Aluno_Aluno1_idx` (`idAluno`),
+  KEY `fk_Contraida_has_Aluno_Contraida1_idx` (`idContraida`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -298,9 +342,10 @@ CREATE TABLE `ContraidaAluno` (
 -- Estrutura da tabela `Cor`
 --
 
-CREATE TABLE `Cor` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Cor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -309,8 +354,8 @@ CREATE TABLE `Cor` (
 -- Estrutura da tabela `Curso`
 --
 
-CREATE TABLE `Curso` (
-  `idCurso` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Curso` (
+  `idCurso` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) DEFAULT NULL,
   `habilitacao` varchar(100) DEFAULT NULL,
   `freqMinima` int(11) DEFAULT NULL,
@@ -329,8 +374,18 @@ CREATE TABLE `Curso` (
   `idTipoNota` int(11) DEFAULT NULL,
   `idAvaliacaoMedia` int(11) DEFAULT NULL,
   `observacao` varchar(500) DEFAULT NULL,
-  `dataLimiteIdadeMinima` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `dataLimiteIdadeMinima` date DEFAULT NULL,
+  PRIMARY KEY (`idCurso`),
+  KEY `fk_Curso_UnidadeEscolar1_idx` (`idUnidadeEscolar`),
+  KEY `fk_Curso_ResultadoDisciplina1_idx` (`idResultadoAprovado`),
+  KEY `fk_Curso_ResultadoDisciplina2_idx` (`idResultadoRecuperacao`),
+  KEY `fk_Curso_ResultadoDisciplina3_idx` (`idResultadoDependencia`),
+  KEY `fk_Curso_ResultadoDisciplina4_idx` (`idResultadoRepNota`),
+  KEY `fk_Curso_ResultadoDisciplina5_idx` (`idResultadoRepFalta`),
+  KEY `fk_Curso_SerieCurso1_idx` (`idSerieCurso`),
+  KEY `fk_Curso_TipoNota1_idx` (`idTipoNota`),
+  KEY `fk_Curso_Avaliacao1_idx` (`idAvaliacaoMedia`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `Curso`
@@ -348,9 +403,10 @@ INSERT INTO `Curso` (`idCurso`, `descricao`, `habilitacao`, `freqMinima`, `temId
 -- Estrutura da tabela `CursoAnterior`
 --
 
-CREATE TABLE `CursoAnterior` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `CursoAnterior` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -359,13 +415,17 @@ CREATE TABLE `CursoAnterior` (
 -- Estrutura da tabela `CursoFunc`
 --
 
-CREATE TABLE `CursoFunc` (
-  `idCursoFunc` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `CursoFunc` (
+  `idCursoFunc` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
   `conclusao` date DEFAULT NULL,
   `idFuncionario` int(11) NOT NULL,
   `idModalidadeEnsino` int(11) NOT NULL,
-  `idEstabelecimento` int(11) NOT NULL
+  `idEstabelecimento` int(11) NOT NULL,
+  PRIMARY KEY (`idCursoFunc`),
+  KEY `fk_CursoFunc_Funcionario1_idx` (`idFuncionario`),
+  KEY `fk_CursoFunc_ModalidadeEnsino1_idx` (`idModalidadeEnsino`),
+  KEY `fk_CursoFunc_Estabelecimento1_idx` (`idEstabelecimento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -374,9 +434,10 @@ CREATE TABLE `CursoFunc` (
 -- Estrutura da tabela `DadosComplementares`
 --
 
-CREATE TABLE `DadosComplementares` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `DadosComplementares` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -385,12 +446,15 @@ CREATE TABLE `DadosComplementares` (
 -- Estrutura da tabela `DepFunc`
 --
 
-CREATE TABLE `DepFunc` (
-  `idDepFunc` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `DepFunc` (
+  `idDepFunc` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
   `dataNascimento` date DEFAULT NULL,
   `idFuncionario` int(11) NOT NULL,
-  `idRelacionamento` int(11) NOT NULL
+  `idRelacionamento` int(11) NOT NULL,
+  PRIMARY KEY (`idDepFunc`),
+  KEY `fk_DepFunc_Funcionario1_idx` (`idFuncionario`),
+  KEY `fk_DepFunc_Relacionamento1_idx` (`idRelacionamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -399,9 +463,10 @@ CREATE TABLE `DepFunc` (
 -- Estrutura da tabela `Desabilidade`
 --
 
-CREATE TABLE `Desabilidade` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Desabilidade` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -410,10 +475,13 @@ CREATE TABLE `Desabilidade` (
 -- Estrutura da tabela `DesabilidadeAluno`
 --
 
-CREATE TABLE `DesabilidadeAluno` (
-  `idDesabilidadeAluno` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `DesabilidadeAluno` (
+  `idDesabilidadeAluno` int(11) NOT NULL AUTO_INCREMENT,
   `idAluno` int(11) NOT NULL,
-  `idDesabilidade` int(11) NOT NULL
+  `idDesabilidade` int(11) NOT NULL,
+  PRIMARY KEY (`idDesabilidadeAluno`),
+  KEY `fk_Aluno_has_Desabilidade_Desabilidade1_idx` (`idDesabilidade`),
+  KEY `fk_Aluno_has_Desabilidade_Aluno1_idx` (`idAluno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -422,11 +490,12 @@ CREATE TABLE `DesabilidadeAluno` (
 -- Estrutura da tabela `Disciplina`
 --
 
-CREATE TABLE `Disciplina` (
-  `idDisciplina` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Disciplina` (
+  `idDisciplina` int(11) NOT NULL AUTO_INCREMENT,
   `abreviatura` varchar(20) DEFAULT NULL,
-  `nome` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nome` varchar(100) NOT NULL,
+  PRIMARY KEY (`idDisciplina`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `Disciplina`
@@ -446,13 +515,17 @@ INSERT INTO `Disciplina` (`idDisciplina`, `abreviatura`, `nome`) VALUES
 -- Estrutura da tabela `DisciplinaAvaliacao`
 --
 
-CREATE TABLE `DisciplinaAvaliacao` (
-  `idDisciplinaAvaliacao` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `DisciplinaAvaliacao` (
+  `idDisciplinaAvaliacao` int(11) NOT NULL AUTO_INCREMENT,
   `idMatriculaDisciplina` int(11) NOT NULL,
   `idAvaliacao` int(11) NOT NULL,
   `idConceito` int(11) DEFAULT NULL,
-  `nota` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nota` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`idDisciplinaAvaliacao`),
+  KEY `fk_DisciplinaAvaliacao_MatriculaDisciplina1_idx` (`idMatriculaDisciplina`),
+  KEY `fk_DisciplinaAvaliacao_Avaliacao1_idx` (`idAvaliacao`),
+  KEY `fk_DisciplinaAvaliacao_Conceito1_idx` (`idConceito`)
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `DisciplinaAvaliacao`
@@ -528,7 +601,7 @@ INSERT INTO `DisciplinaAvaliacao` (`idDisciplinaAvaliacao`, `idMatriculaDiscipli
 (92, 24, 1, NULL, '5.00'),
 (93, 24, 4, NULL, '9.40'),
 (94, 24, 5, NULL, '4.60'),
-(95, 18, 1, NULL, '6.00'),
+(95, 18, 1, NULL, '10.00'),
 (96, 18, 4, NULL, '6.00'),
 (97, 18, 5, NULL, '6.00'),
 (98, 25, 1, NULL, '4.00'),
@@ -541,8 +614,8 @@ INSERT INTO `DisciplinaAvaliacao` (`idDisciplinaAvaliacao`, `idMatriculaDiscipli
 -- Estrutura da tabela `Disciplina_Grade`
 --
 
-CREATE TABLE `Disciplina_Grade` (
-  `idDisciplina_Grade` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Disciplina_Grade` (
+  `idDisciplina_Grade` int(11) NOT NULL AUTO_INCREMENT,
   `chSemanal` int(11) DEFAULT NULL,
   `minutosAula` int(11) DEFAULT NULL,
   `chPeriodo` int(11) DEFAULT NULL,
@@ -558,8 +631,13 @@ CREATE TABLE `Disciplina_Grade` (
   `apuraFalta` tinyint(1) DEFAULT NULL,
   `apuraNota` tinyint(1) DEFAULT NULL,
   `modular` tinyint(1) DEFAULT NULL,
-  `idTipoDisciplina` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idTipoDisciplina` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idDisciplina_Grade`),
+  KEY `fk_Disciplina_Grade_Disciplina1_idx` (`idDisciplina`),
+  KEY `fk_Disciplina_Grade_GradeCurricular1_idx` (`idGrade`),
+  KEY `fk_Disciplina_Grade_TipoNota1_idx` (`idTipoNota`),
+  KEY `fk_Disciplina_Grade_TipoDisciplina1_idx` (`idTipoDisciplina`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `Disciplina_Grade`
@@ -579,9 +657,10 @@ INSERT INTO `Disciplina_Grade` (`idDisciplina_Grade`, `chSemanal`, `minutosAula`
 -- Estrutura da tabela `Documento`
 --
 
-CREATE TABLE `Documento` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Documento` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -590,10 +669,13 @@ CREATE TABLE `Documento` (
 -- Estrutura da tabela `DocumentoAluno`
 --
 
-CREATE TABLE `DocumentoAluno` (
-  `idDocumentoAluno` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `DocumentoAluno` (
+  `idDocumentoAluno` int(11) NOT NULL AUTO_INCREMENT,
   `idDocumento` int(11) NOT NULL,
-  `idAluno` int(11) NOT NULL
+  `idAluno` int(11) NOT NULL,
+  PRIMARY KEY (`idDocumentoAluno`),
+  KEY `fk_Documento_has_Aluno_Aluno1_idx` (`idAluno`),
+  KEY `fk_Documento_has_Aluno_Documento1_idx` (`idDocumento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -602,10 +684,13 @@ CREATE TABLE `DocumentoAluno` (
 -- Estrutura da tabela `Documento_Curso`
 --
 
-CREATE TABLE `Documento_Curso` (
+CREATE TABLE IF NOT EXISTS `Documento_Curso` (
   `idCurso` int(11) NOT NULL,
-  `idDocumento_Curso` int(11) NOT NULL,
-  `idDocumento` int(11) NOT NULL
+  `idDocumento_Curso` int(11) NOT NULL AUTO_INCREMENT,
+  `idDocumento` int(11) NOT NULL,
+  PRIMARY KEY (`idDocumento_Curso`),
+  KEY `fk_Curso_has_TipoDocumento_Curso1_idx` (`idCurso`),
+  KEY `fk_Documento_Curso_Documento1_idx` (`idDocumento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -614,9 +699,10 @@ CREATE TABLE `Documento_Curso` (
 -- Estrutura da tabela `Doenca`
 --
 
-CREATE TABLE `Doenca` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Doenca` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -625,10 +711,13 @@ CREATE TABLE `Doenca` (
 -- Estrutura da tabela `DoencaAluno`
 --
 
-CREATE TABLE `DoencaAluno` (
-  `idDoencaAluno` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `DoencaAluno` (
+  `idDoencaAluno` int(11) NOT NULL AUTO_INCREMENT,
   `idDoenca` int(11) NOT NULL,
-  `idAluno` int(11) NOT NULL
+  `idAluno` int(11) NOT NULL,
+  PRIMARY KEY (`idDoencaAluno`),
+  KEY `fk_Doenca_has_Aluno_Aluno1_idx` (`idAluno`),
+  KEY `fk_Doenca_has_Aluno_Doenca1_idx` (`idDoenca`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -637,10 +726,11 @@ CREATE TABLE `DoencaAluno` (
 -- Estrutura da tabela `Escolaridade`
 --
 
-CREATE TABLE `Escolaridade` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Escolaridade` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nivel` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -649,9 +739,10 @@ CREATE TABLE `Escolaridade` (
 -- Estrutura da tabela `Estabelecimento`
 --
 
-CREATE TABLE `Estabelecimento` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Estabelecimento` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -660,8 +751,8 @@ CREATE TABLE `Estabelecimento` (
 -- Estrutura da tabela `EstabelecimentoEnsino`
 --
 
-CREATE TABLE `EstabelecimentoEnsino` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `EstabelecimentoEnsino` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
   `endereco` varchar(100) DEFAULT NULL,
   `idCidade` int(11) DEFAULT NULL,
@@ -669,7 +760,10 @@ CREATE TABLE `EstabelecimentoEnsino` (
   `cep` char(10) DEFAULT NULL,
   `numero` varchar(10) DEFAULT NULL,
   `complemento` varchar(50) DEFAULT NULL,
-  `bairro` varchar(50) DEFAULT NULL
+  `bairro` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Cidade_id_idx` (`idCidade`),
+  KEY `fk_EstabelecimentoEnsino_TipoLocalizacao1_idx` (`idTipoLocalizacao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -678,9 +772,10 @@ CREATE TABLE `EstabelecimentoEnsino` (
 -- Estrutura da tabela `Estado`
 --
 
-CREATE TABLE `Estado` (
+CREATE TABLE IF NOT EXISTS `Estado` (
   `uf` char(2) NOT NULL,
-  `nome` varchar(100) NOT NULL
+  `nome` varchar(100) NOT NULL,
+  PRIMARY KEY (`uf`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -689,9 +784,10 @@ CREATE TABLE `Estado` (
 -- Estrutura da tabela `EstadoCivil`
 --
 
-CREATE TABLE `EstadoCivil` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `EstadoCivil` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -700,11 +796,14 @@ CREATE TABLE `EstadoCivil` (
 -- Estrutura da tabela `Evento`
 --
 
-CREATE TABLE `Evento` (
-  `idEvento` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Evento` (
+  `idEvento` int(11) NOT NULL AUTO_INCREMENT,
   `data` date DEFAULT NULL,
   `idPeriodo` int(11) NOT NULL,
-  `idTipoEventoCalendario` int(11) NOT NULL
+  `idTipoEventoCalendario` int(11) NOT NULL,
+  PRIMARY KEY (`idEvento`),
+  KEY `fk_Evento_Periodo1_idx` (`idPeriodo`),
+  KEY `fk_Evento_TipoEventoCalendario1_idx` (`idTipoEventoCalendario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -713,10 +812,11 @@ CREATE TABLE `Evento` (
 -- Estrutura da tabela `Frase`
 --
 
-CREATE TABLE `Frase` (
-  `idFrase` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Frase` (
+  `idFrase` int(11) NOT NULL AUTO_INCREMENT,
   `frase` varchar(1000) DEFAULT NULL,
-  `autor` varchar(100) DEFAULT NULL
+  `autor` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idFrase`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -725,8 +825,8 @@ CREATE TABLE `Frase` (
 -- Estrutura da tabela `Funcionario`
 --
 
-CREATE TABLE `Funcionario` (
-  `idFuncionario` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Funcionario` (
+  `idFuncionario` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
   `cpf` char(14) NOT NULL,
   `sexo` char(1) DEFAULT NULL,
@@ -770,8 +870,18 @@ CREATE TABLE `Funcionario` (
   `idTipoAdmissao` int(11) DEFAULT NULL,
   `idSituacaoFuncional` int(11) DEFAULT NULL,
   `idMotivoDemissao` int(11) DEFAULT NULL,
-  `idUsuario` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idUsuario` int(11) NOT NULL,
+  PRIMARY KEY (`idFuncionario`),
+  KEY `fk_Professor_TipoEndereco1_idx` (`idTipoEndereco`),
+  KEY `fk_Professor_Cidade1_idx` (`idCidEndereco`),
+  KEY `fk_Funcionario_TipoDocumento1_idx` (`idTipoDocumento`),
+  KEY `fk_Funcionario_Cidade1_idx` (`idCidNatural`),
+  KEY `fk_Funcionario_Nacionalidade1_idx` (`idNacionalidade`),
+  KEY `fk_Funcionario_EstadoCivil1_idx` (`idEstadoCivil`),
+  KEY `fk_Funcionario_TipoAdmissao1_idx` (`idTipoAdmissao`),
+  KEY `fk_Funcionario_SituacaoFuncional1_idx` (`idSituacaoFuncional`),
+  KEY `fk_Funcionario_MotivoDemissao1_idx` (`idMotivoDemissao`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `Funcionario`
@@ -787,11 +897,13 @@ INSERT INTO `Funcionario` (`idFuncionario`, `nome`, `cpf`, `sexo`, `dataNascimen
 -- Estrutura da tabela `GradeCurricular`
 --
 
-CREATE TABLE `GradeCurricular` (
-  `idGrade` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `GradeCurricular` (
+  `idGrade` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) DEFAULT NULL,
-  `idCurso` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idCurso` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idGrade`),
+  KEY `fk_GradeCurricular_Curso1_idx` (`idCurso`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `GradeCurricular`
@@ -811,10 +923,12 @@ INSERT INTO `GradeCurricular` (`idGrade`, `descricao`, `idCurso`) VALUES
 -- Estrutura da tabela `GrauCurso`
 --
 
-CREATE TABLE `GrauCurso` (
-  `idGrauCurso` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `GrauCurso` (
+  `idGrauCurso` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
-  `ModalidadeEnsino_id` int(11) NOT NULL
+  `ModalidadeEnsino_id` int(11) NOT NULL,
+  PRIMARY KEY (`idGrauCurso`),
+  KEY `fk_GrauCurso_ModalidadeEnsino1_idx` (`ModalidadeEnsino_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -823,8 +937,8 @@ CREATE TABLE `GrauCurso` (
 -- Estrutura da tabela `Horario`
 --
 
-CREATE TABLE `Horario` (
-  `idHorario` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Horario` (
+  `idHorario` int(11) NOT NULL AUTO_INCREMENT,
   `seg` tinyint(1) DEFAULT NULL,
   `ter` tinyint(1) DEFAULT NULL,
   `qua` tinyint(1) DEFAULT NULL,
@@ -834,8 +948,10 @@ CREATE TABLE `Horario` (
   `dom` tinyint(1) DEFAULT NULL,
   `inicio` char(5) DEFAULT NULL,
   `fim` char(5) DEFAULT NULL,
-  `idTurno` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idTurno` int(11) NOT NULL,
+  PRIMARY KEY (`idHorario`),
+  KEY `fk_Horario_Turno1_idx` (`idTurno`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `Horario`
@@ -857,15 +973,21 @@ INSERT INTO `Horario` (`idHorario`, `seg`, `ter`, `qua`, `qui`, `sex`, `sab`, `d
 -- Estrutura da tabela `HorarioTurma`
 --
 
-CREATE TABLE `HorarioTurma` (
-  `idHorarioTurma` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `HorarioTurma` (
+  `idHorarioTurma` int(11) NOT NULL AUTO_INCREMENT,
   `diaSemana` int(11) NOT NULL,
   `idTurma` int(11) NOT NULL,
   `idHorario` int(11) DEFAULT NULL,
   `idDisciplina_Grade` int(11) NOT NULL,
   `idFuncionario` int(11) NOT NULL,
-  `idSalaTurma` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idSalaTurma` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idHorarioTurma`),
+  KEY `fk_HorarioTurma_Turma1_idx` (`idTurma`),
+  KEY `fk_HorarioTurma_Horario1_idx` (`idHorario`),
+  KEY `fk_HorarioTurma_Disciplina_Grade1_idx` (`idDisciplina_Grade`),
+  KEY `fk_HorarioTurma_Funcionario1_idx` (`idFuncionario`),
+  KEY `fk_HorarioTurma_SalaTurma1_idx` (`idSalaTurma`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `HorarioTurma`
@@ -885,9 +1007,10 @@ INSERT INTO `HorarioTurma` (`idHorarioTurma`, `diaSemana`, `idTurma`, `idHorario
 -- Estrutura da tabela `Hospital`
 --
 
-CREATE TABLE `Hospital` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Hospital` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -896,9 +1019,10 @@ CREATE TABLE `Hospital` (
 -- Estrutura da tabela `IEUEnsino`
 --
 
-CREATE TABLE `IEUEnsino` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `IEUEnsino` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -907,8 +1031,8 @@ CREATE TABLE `IEUEnsino` (
 -- Estrutura da tabela `InfProfFunc`
 --
 
-CREATE TABLE `InfProfFunc` (
-  `idInfProfFunc` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `InfProfFunc` (
+  `idInfProfFunc` int(11) NOT NULL AUTO_INCREMENT,
   `empresa` varchar(100) NOT NULL,
   `telefone` char(15) DEFAULT NULL,
   `endereco` varchar(100) DEFAULT NULL,
@@ -917,7 +1041,11 @@ CREATE TABLE `InfProfFunc` (
   `observacao` varchar(100) DEFAULT NULL,
   `idFuncionario` int(11) NOT NULL,
   `idCargo` int(11) DEFAULT NULL,
-  `idCidade` int(11) DEFAULT NULL
+  `idCidade` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idInfProfFunc`),
+  KEY `fk_InfProfFunc_Funcionario1_idx` (`idFuncionario`),
+  KEY `fk_InfProfFunc_Cargo1_idx` (`idCargo`),
+  KEY `fk_InfProfFunc_Cidade1_idx` (`idCidade`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -926,11 +1054,14 @@ CREATE TABLE `InfProfFunc` (
 -- Estrutura da tabela `InfraEstrutura`
 --
 
-CREATE TABLE `InfraEstrutura` (
-  `idInfraEstrutura` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `InfraEstrutura` (
+  `idInfraEstrutura` int(11) NOT NULL AUTO_INCREMENT,
   `idIEUEnsino` int(11) NOT NULL,
   `idUnidadeEscolar` int(11) NOT NULL,
-  `quantidade` int(11) DEFAULT '1'
+  `quantidade` int(11) DEFAULT '1',
+  PRIMARY KEY (`idInfraEstrutura`),
+  KEY `fk_InfraEstrutura_IEUEnsino1_idx` (`idIEUEnsino`),
+  KEY `fk_InfraEstrutura_UnidadeEscolar1_idx` (`idUnidadeEscolar`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -939,15 +1070,16 @@ CREATE TABLE `InfraEstrutura` (
 -- Estrutura da tabela `Livro`
 --
 
-CREATE TABLE `Livro` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Livro` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(100) NOT NULL,
   `subtitulo` varchar(100) DEFAULT NULL,
   `serie` varchar(50) DEFAULT NULL,
   `autor` varchar(200) DEFAULT NULL,
   `ano` varchar(4) DEFAULT NULL,
   `editora` varchar(50) DEFAULT NULL,
-  `edicao` varchar(10) DEFAULT NULL
+  `edicao` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -956,10 +1088,13 @@ CREATE TABLE `Livro` (
 -- Estrutura da tabela `Livro_Curso`
 --
 
-CREATE TABLE `Livro_Curso` (
+CREATE TABLE IF NOT EXISTS `Livro_Curso` (
   `idLivro` int(11) NOT NULL,
   `idCurso` int(11) NOT NULL,
-  `idLivro_Curso` int(11) NOT NULL
+  `idLivro_Curso` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`idLivro_Curso`),
+  KEY `fk_Livro_has_Curso_Curso1_idx` (`idCurso`),
+  KEY `fk_Livro_has_Curso_Livro1_idx` (`idLivro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -968,14 +1103,18 @@ CREATE TABLE `Livro_Curso` (
 -- Estrutura da tabela `Matricula`
 --
 
-CREATE TABLE `Matricula` (
-  `idMatricula` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Matricula` (
+  `idMatricula` int(11) NOT NULL AUTO_INCREMENT,
   `idAluno` int(11) NOT NULL,
   `idTurma` int(11) NOT NULL,
   `data` date DEFAULT NULL,
   `todasDisciplinas` tinyint(1) DEFAULT NULL,
-  `idTipoMatricula` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idTipoMatricula` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idMatricula`),
+  KEY `fk_Matricula_Aluno1_idx` (`idAluno`),
+  KEY `fk_Matricula_Turma1_idx` (`idTurma`),
+  KEY `fk_Matricula_TipoMatricula1_idx` (`idTipoMatricula`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `Matricula`
@@ -1014,12 +1153,16 @@ INSERT INTO `Matricula` (`idMatricula`, `idAluno`, `idTurma`, `data`, `todasDisc
 -- Estrutura da tabela `MatriculaDisciplina`
 --
 
-CREATE TABLE `MatriculaDisciplina` (
-  `idMatriculaDisciplina` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `MatriculaDisciplina` (
+  `idMatriculaDisciplina` int(11) NOT NULL AUTO_INCREMENT,
   `idMatricula` int(11) NOT NULL,
   `idDisciplina_Grade` int(11) NOT NULL,
-  `idResultadoDisciplina` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idResultadoDisciplina` int(11) NOT NULL,
+  PRIMARY KEY (`idMatriculaDisciplina`),
+  KEY `fk_MatriculaDisciplina_Matricula1_idx` (`idMatricula`),
+  KEY `fk_MatriculaDisciplina_Disciplina_Grade1_idx` (`idDisciplina_Grade`),
+  KEY `fk_MatriculaDisciplina_ResultadoDisciplina1_idx` (`idResultadoDisciplina`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `MatriculaDisciplina`
@@ -1058,9 +1201,10 @@ INSERT INTO `MatriculaDisciplina` (`idMatriculaDisciplina`, `idMatricula`, `idDi
 -- Estrutura da tabela `ModalidadeEnsino`
 --
 
-CREATE TABLE `ModalidadeEnsino` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `ModalidadeEnsino` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1069,10 +1213,13 @@ CREATE TABLE `ModalidadeEnsino` (
 -- Estrutura da tabela `ModalidadeUnidade`
 --
 
-CREATE TABLE `ModalidadeUnidade` (
-  `idModalidadeUnidade` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `ModalidadeUnidade` (
+  `idModalidadeUnidade` int(11) NOT NULL AUTO_INCREMENT,
   `idModalidadeEnsino` int(11) NOT NULL,
-  `idUnidadeEnsino` int(11) NOT NULL
+  `idUnidadeEnsino` int(11) NOT NULL,
+  PRIMARY KEY (`idModalidadeUnidade`),
+  KEY `fk_ModalidadeUnidade_ModalidadeEnsino1_idx` (`idModalidadeEnsino`),
+  KEY `fk_ModalidadeUnidade_UnidadeEscolar1_idx` (`idUnidadeEnsino`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1081,9 +1228,10 @@ CREATE TABLE `ModalidadeUnidade` (
 -- Estrutura da tabela `MotivoDemissao`
 --
 
-CREATE TABLE `MotivoDemissao` (
-  `idMotivoDemissao` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `MotivoDemissao` (
+  `idMotivoDemissao` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`idMotivoDemissao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1092,9 +1240,10 @@ CREATE TABLE `MotivoDemissao` (
 -- Estrutura da tabela `Nacionalidade`
 --
 
-CREATE TABLE `Nacionalidade` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Nacionalidade` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1103,9 +1252,10 @@ CREATE TABLE `Nacionalidade` (
 -- Estrutura da tabela `NomeTurma`
 --
 
-CREATE TABLE `NomeTurma` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `NomeTurma` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1114,11 +1264,14 @@ CREATE TABLE `NomeTurma` (
 -- Estrutura da tabela `NumTels`
 --
 
-CREATE TABLE `NumTels` (
-  `idNumTels` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `NumTels` (
+  `idNumTels` int(11) NOT NULL AUTO_INCREMENT,
   `idTipoTelefone` int(11) NOT NULL,
   `idUnidadeEscolar` int(11) NOT NULL,
-  `numero` varchar(15) DEFAULT NULL
+  `numero` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`idNumTels`),
+  KEY `fk_NumTels_TipoTelefone1_idx` (`idTipoTelefone`),
+  KEY `fk_NumTels_UnidadeEscolar1_idx` (`idUnidadeEscolar`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1127,15 +1280,17 @@ CREATE TABLE `NumTels` (
 -- Estrutura da tabela `Periodo`
 --
 
-CREATE TABLE `Periodo` (
-  `idPeriodo` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Periodo` (
+  `idPeriodo` int(11) NOT NULL AUTO_INCREMENT,
   `periodo` char(6) NOT NULL,
   `inicio` date DEFAULT NULL,
   `termino` date DEFAULT NULL,
   `incluiSabados` tinyint(1) DEFAULT NULL,
   `numDias` int(11) DEFAULT NULL,
-  `observacao` varchar(500) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `observacao` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`idPeriodo`),
+  UNIQUE KEY `periodo_UNIQUE` (`periodo`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `Periodo`
@@ -1150,9 +1305,10 @@ INSERT INTO `Periodo` (`idPeriodo`, `periodo`, `inicio`, `termino`, `incluiSabad
 -- Estrutura da tabela `PlanoSaude`
 --
 
-CREATE TABLE `PlanoSaude` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `PlanoSaude` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1161,10 +1317,13 @@ CREATE TABLE `PlanoSaude` (
 -- Estrutura da tabela `Pre_Requisito`
 --
 
-CREATE TABLE `Pre_Requisito` (
-  `idPreRequisito` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Pre_Requisito` (
+  `idPreRequisito` int(11) NOT NULL AUTO_INCREMENT,
   `idDisciplina_Grade` int(11) NOT NULL,
-  `idDisciplina_Pre_Requisito` int(11) NOT NULL
+  `idDisciplina_Pre_Requisito` int(11) NOT NULL,
+  PRIMARY KEY (`idPreRequisito`),
+  KEY `fk_Pre_Requisito_Disciplina_Grade1_idx` (`idDisciplina_Grade`),
+  KEY `fk_Pre_Requisito_Disciplina_Grade2_idx` (`idDisciplina_Pre_Requisito`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1173,9 +1332,10 @@ CREATE TABLE `Pre_Requisito` (
 -- Estrutura da tabela `Profissao`
 --
 
-CREATE TABLE `Profissao` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Profissao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1184,9 +1344,10 @@ CREATE TABLE `Profissao` (
 -- Estrutura da tabela `RedeEnsino`
 --
 
-CREATE TABLE `RedeEnsino` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `RedeEnsino` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1195,13 +1356,16 @@ CREATE TABLE `RedeEnsino` (
 -- Estrutura da tabela `RefFunc`
 --
 
-CREATE TABLE `RefFunc` (
-  `idRefFunc` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `RefFunc` (
+  `idRefFunc` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
   `telefone` char(15) DEFAULT NULL,
   `observacao` varchar(100) DEFAULT NULL,
   `idFuncionario` int(11) NOT NULL,
-  `idRelacionamento` int(11) DEFAULT NULL
+  `idRelacionamento` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idRefFunc`),
+  KEY `fk_RefFunc_Funcionario1_idx` (`idFuncionario`),
+  KEY `fk_RefFunc_Relacionamento1_idx` (`idRelacionamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1210,9 +1374,10 @@ CREATE TABLE `RefFunc` (
 -- Estrutura da tabela `Regime`
 --
 
-CREATE TABLE `Regime` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Regime` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1221,9 +1386,10 @@ CREATE TABLE `Regime` (
 -- Estrutura da tabela `Relacionamento`
 --
 
-CREATE TABLE `Relacionamento` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Relacionamento` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1232,9 +1398,10 @@ CREATE TABLE `Relacionamento` (
 -- Estrutura da tabela `Religiao`
 --
 
-CREATE TABLE `Religiao` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Religiao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1243,11 +1410,15 @@ CREATE TABLE `Religiao` (
 -- Estrutura da tabela `RespAluno`
 --
 
-CREATE TABLE `RespAluno` (
-  `idRespAluno` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `RespAluno` (
+  `idRespAluno` int(11) NOT NULL AUTO_INCREMENT,
   `idResponsavel` int(11) NOT NULL,
   `idAluno` int(11) NOT NULL,
-  `idTipoResponsavel` int(11) NOT NULL
+  `idTipoResponsavel` int(11) NOT NULL,
+  PRIMARY KEY (`idRespAluno`),
+  KEY `fk_RespAluno_Responsavel1_idx` (`idResponsavel`),
+  KEY `fk_RespAluno_Aluno1_idx` (`idAluno`),
+  KEY `fk_RespAluno_TipoResponsavel1_idx` (`idTipoResponsavel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1256,8 +1427,8 @@ CREATE TABLE `RespAluno` (
 -- Estrutura da tabela `Responsavel`
 --
 
-CREATE TABLE `Responsavel` (
-  `idResponsavel` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Responsavel` (
+  `idResponsavel` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
   `cpf` char(14) NOT NULL,
   `telefone` char(15) DEFAULT NULL,
@@ -1285,7 +1456,15 @@ CREATE TABLE `Responsavel` (
   `idEstadoCivil` int(11) DEFAULT NULL,
   `conjuge` varchar(100) DEFAULT NULL,
   `sexo` char(1) DEFAULT NULL,
-  `dataNascimento` date DEFAULT NULL
+  `dataNascimento` date DEFAULT NULL,
+  PRIMARY KEY (`idResponsavel`),
+  KEY `fk_Responsavel_Cidade1_idx` (`idCidEndereco`),
+  KEY `fk_Responsavel_Cidade2_idx` (`idCidNatural`),
+  KEY `fk_Responsavel_TipoEndereco1_idx` (`idTipoEndereco`),
+  KEY `fk_Responsavel_Profissao1_idx` (`idProfissao`),
+  KEY `fk_Responsavel_Nacionalidade1_idx` (`idNacionalidade`),
+  KEY `fk_Responsavel_TipoDocumento1_idx` (`idTipoDocumento`),
+  KEY `fk_Responsavel_EstadoCivil1_idx` (`idEstadoCivil`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1294,12 +1473,13 @@ CREATE TABLE `Responsavel` (
 -- Estrutura da tabela `ResultadoDisciplina`
 --
 
-CREATE TABLE `ResultadoDisciplina` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `ResultadoDisciplina` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
   `abreviacao` varchar(10) DEFAULT NULL,
-  `aprovado` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `aprovado` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `ResultadoDisciplina`
@@ -1315,12 +1495,13 @@ INSERT INTO `ResultadoDisciplina` (`id`, `descricao`, `abreviacao`, `aprovado`) 
 -- Estrutura da tabela `Rotina`
 --
 
-CREATE TABLE `Rotina` (
-  `idRotina` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Rotina` (
+  `idRotina` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
   `inclusao` tinyint(1) DEFAULT NULL,
   `edicao` tinyint(1) DEFAULT NULL,
-  `exclusao` tinyint(1) DEFAULT NULL
+  `exclusao` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`idRotina`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1329,16 +1510,20 @@ CREATE TABLE `Rotina` (
 -- Estrutura da tabela `Sala`
 --
 
-CREATE TABLE `Sala` (
-  `idSala` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Sala` (
+  `idSala` int(11) NOT NULL AUTO_INCREMENT,
   `numero` varchar(10) NOT NULL,
   `descricao` varchar(100) DEFAULT NULL,
   `area` decimal(10,2) DEFAULT NULL,
   `idUnidadeEscolar` int(11) DEFAULT NULL,
   `idTipoSala` int(11) DEFAULT NULL,
   `idTipoUtilizacao` int(11) DEFAULT NULL,
-  `necessidadesEspeciais` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `necessidadesEspeciais` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`idSala`),
+  KEY `fk_Sala_UnidadeEscolar1_idx` (`idUnidadeEscolar`),
+  KEY `fk_Sala_TipoSala1_idx` (`idTipoSala`),
+  KEY `fk_Sala_TipoUtilizacao1_idx` (`idTipoUtilizacao`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `Sala`
@@ -1358,11 +1543,14 @@ INSERT INTO `Sala` (`idSala`, `numero`, `descricao`, `area`, `idUnidadeEscolar`,
 -- Estrutura da tabela `SalaTurma`
 --
 
-CREATE TABLE `SalaTurma` (
-  `idSalaTurma` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `SalaTurma` (
+  `idSalaTurma` int(11) NOT NULL AUTO_INCREMENT,
   `idSala` int(11) NOT NULL,
-  `idTurma` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idTurma` int(11) NOT NULL,
+  PRIMARY KEY (`idSalaTurma`),
+  KEY `fk_SalaTurma_Sala1_idx` (`idSala`),
+  KEY `fk_SalaTurma_Turma1_idx` (`idTurma`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `SalaTurma`
@@ -1382,11 +1570,13 @@ INSERT INTO `SalaTurma` (`idSalaTurma`, `idSala`, `idTurma`) VALUES
 -- Estrutura da tabela `SerieCurso`
 --
 
-CREATE TABLE `SerieCurso` (
-  `idSerieCurso` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `SerieCurso` (
+  `idSerieCurso` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
   `unicoProfessor` tinyint(1) NOT NULL DEFAULT '1',
-  `idGrauCurso` int(11) NOT NULL
+  `idGrauCurso` int(11) NOT NULL,
+  PRIMARY KEY (`idSerieCurso`),
+  KEY `fk_SerieCurso_GrauCurso_idx` (`idGrauCurso`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1395,11 +1585,12 @@ CREATE TABLE `SerieCurso` (
 -- Estrutura da tabela `SitFuncionamento`
 --
 
-CREATE TABLE `SitFuncionamento` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `SitFuncionamento` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
   `okLancamento` tinyint(1) DEFAULT NULL,
-  `okMatricula` tinyint(1) DEFAULT NULL
+  `okMatricula` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1408,10 +1599,11 @@ CREATE TABLE `SitFuncionamento` (
 -- Estrutura da tabela `SituacaoAluno`
 --
 
-CREATE TABLE `SituacaoAluno` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `SituacaoAluno` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
-  `permiteAlteracao` tinyint(1) DEFAULT NULL
+  `permiteAlteracao` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1420,10 +1612,11 @@ CREATE TABLE `SituacaoAluno` (
 -- Estrutura da tabela `SituacaoConta`
 --
 
-CREATE TABLE `SituacaoConta` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `SituacaoConta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
-  `ativa` tinyint(1) NOT NULL DEFAULT '1'
+  `ativa` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1432,9 +1625,10 @@ CREATE TABLE `SituacaoConta` (
 -- Estrutura da tabela `SituacaoFuncional`
 --
 
-CREATE TABLE `SituacaoFuncional` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `SituacaoFuncional` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1443,9 +1637,10 @@ CREATE TABLE `SituacaoFuncional` (
 -- Estrutura da tabela `SituacaoMatricula`
 --
 
-CREATE TABLE `SituacaoMatricula` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `SituacaoMatricula` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1454,11 +1649,14 @@ CREATE TABLE `SituacaoMatricula` (
 -- Estrutura da tabela `TelAluno`
 --
 
-CREATE TABLE `TelAluno` (
-  `idTelAluno` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `TelAluno` (
+  `idTelAluno` int(11) NOT NULL AUTO_INCREMENT,
   `numero` char(15) NOT NULL,
   `idAluno` int(11) NOT NULL,
-  `idTipoTelefone` int(11) NOT NULL
+  `idTipoTelefone` int(11) NOT NULL,
+  PRIMARY KEY (`idTelAluno`),
+  KEY `fk_TelAluno_Aluno1_idx` (`idAluno`),
+  KEY `fk_TelAluno_TipoTelefone1_idx` (`idTipoTelefone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1467,11 +1665,14 @@ CREATE TABLE `TelAluno` (
 -- Estrutura da tabela `TelFunc`
 --
 
-CREATE TABLE `TelFunc` (
-  `idTelFunc` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `TelFunc` (
+  `idTelFunc` int(11) NOT NULL AUTO_INCREMENT,
   `idFuncionario` int(11) NOT NULL,
   `idTipoTelefone` int(11) NOT NULL,
-  `numero` char(15) NOT NULL
+  `numero` char(15) NOT NULL,
+  PRIMARY KEY (`idTelFunc`),
+  KEY `fk_TelsProf_Professor1_idx` (`idFuncionario`),
+  KEY `fk_TelsProf_TipoTelefone1_idx` (`idTipoTelefone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1480,9 +1681,10 @@ CREATE TABLE `TelFunc` (
 -- Estrutura da tabela `TipoAdmissao`
 --
 
-CREATE TABLE `TipoAdmissao` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoAdmissao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1491,9 +1693,10 @@ CREATE TABLE `TipoAdmissao` (
 -- Estrutura da tabela `TipoAula`
 --
 
-CREATE TABLE `TipoAula` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoAula` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1502,9 +1705,10 @@ CREATE TABLE `TipoAula` (
 -- Estrutura da tabela `TipoDependencia`
 --
 
-CREATE TABLE `TipoDependencia` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoDependencia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1513,9 +1717,10 @@ CREATE TABLE `TipoDependencia` (
 -- Estrutura da tabela `TipoDespesa`
 --
 
-CREATE TABLE `TipoDespesa` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoDespesa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1524,9 +1729,10 @@ CREATE TABLE `TipoDespesa` (
 -- Estrutura da tabela `TipoDisciplina`
 --
 
-CREATE TABLE `TipoDisciplina` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoDisciplina` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1535,9 +1741,10 @@ CREATE TABLE `TipoDisciplina` (
 -- Estrutura da tabela `TipoDocumento`
 --
 
-CREATE TABLE `TipoDocumento` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoDocumento` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1546,9 +1753,10 @@ CREATE TABLE `TipoDocumento` (
 -- Estrutura da tabela `TipoEndereco`
 --
 
-CREATE TABLE `TipoEndereco` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoEndereco` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1557,9 +1765,10 @@ CREATE TABLE `TipoEndereco` (
 -- Estrutura da tabela `TipoEnsinoCurso`
 --
 
-CREATE TABLE `TipoEnsinoCurso` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoEnsinoCurso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1568,10 +1777,11 @@ CREATE TABLE `TipoEnsinoCurso` (
 -- Estrutura da tabela `TipoEventoCalendario`
 --
 
-CREATE TABLE `TipoEventoCalendario` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `TipoEventoCalendario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
-  `diaLetivo` tinyint(1) NOT NULL
+  `diaLetivo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1580,9 +1790,10 @@ CREATE TABLE `TipoEventoCalendario` (
 -- Estrutura da tabela `TipoLocalizacao`
 --
 
-CREATE TABLE `TipoLocalizacao` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoLocalizacao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1591,11 +1802,12 @@ CREATE TABLE `TipoLocalizacao` (
 -- Estrutura da tabela `TipoMatricula`
 --
 
-CREATE TABLE `TipoMatricula` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `TipoMatricula` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
   `dependencia` tinyint(1) DEFAULT NULL,
-  `transferencia` tinyint(1) DEFAULT NULL
+  `transferencia` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1604,13 +1816,14 @@ CREATE TABLE `TipoMatricula` (
 -- Estrutura da tabela `TipoNota`
 --
 
-CREATE TABLE `TipoNota` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `TipoNota` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
   `conceito` tinyint(1) NOT NULL DEFAULT '0',
   `precisao` int(11) DEFAULT '1',
-  `vlMax` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `vlMax` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `TipoNota`
@@ -1625,9 +1838,10 @@ INSERT INTO `TipoNota` (`id`, `descricao`, `conceito`, `precisao`, `vlMax`) VALU
 -- Estrutura da tabela `TipoOcorFunc`
 --
 
-CREATE TABLE `TipoOcorFunc` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoOcorFunc` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1636,9 +1850,10 @@ CREATE TABLE `TipoOcorFunc` (
 -- Estrutura da tabela `TipoOcorrencia`
 --
 
-CREATE TABLE `TipoOcorrencia` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoOcorrencia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1647,9 +1862,10 @@ CREATE TABLE `TipoOcorrencia` (
 -- Estrutura da tabela `TipoOcupacao`
 --
 
-CREATE TABLE `TipoOcupacao` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoOcupacao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1658,11 +1874,13 @@ CREATE TABLE `TipoOcupacao` (
 -- Estrutura da tabela `TipoPrograma`
 --
 
-CREATE TABLE `TipoPrograma` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `TipoPrograma` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
   `sigla` varchar(10) DEFAULT NULL,
-  `Abrangencia_id` int(11) NOT NULL
+  `Abrangencia_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_TipoPrograma_Abrangencia1_idx` (`Abrangencia_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1671,9 +1889,10 @@ CREATE TABLE `TipoPrograma` (
 -- Estrutura da tabela `TipoReceita`
 --
 
-CREATE TABLE `TipoReceita` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoReceita` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1682,9 +1901,10 @@ CREATE TABLE `TipoReceita` (
 -- Estrutura da tabela `TipoResponsavel`
 --
 
-CREATE TABLE `TipoResponsavel` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoResponsavel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1693,9 +1913,10 @@ CREATE TABLE `TipoResponsavel` (
 -- Estrutura da tabela `TipoSala`
 --
 
-CREATE TABLE `TipoSala` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoSala` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1704,9 +1925,10 @@ CREATE TABLE `TipoSala` (
 -- Estrutura da tabela `TipoTelefone`
 --
 
-CREATE TABLE `TipoTelefone` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoTelefone` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1715,9 +1937,10 @@ CREATE TABLE `TipoTelefone` (
 -- Estrutura da tabela `TipoTransporte`
 --
 
-CREATE TABLE `TipoTransporte` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `TipoTransporte` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1726,10 +1949,11 @@ CREATE TABLE `TipoTransporte` (
 -- Estrutura da tabela `TipoUtilizacao`
 --
 
-CREATE TABLE `TipoUtilizacao` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `TipoUtilizacao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
-  `multiplasTurmas` tinyint(1) NOT NULL
+  `multiplasTurmas` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1738,8 +1962,8 @@ CREATE TABLE `TipoUtilizacao` (
 -- Estrutura da tabela `Turma`
 --
 
-CREATE TABLE `Turma` (
-  `idTurma` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Turma` (
+  `idTurma` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(50) NOT NULL,
   `multisseriada` tinyint(1) DEFAULT NULL,
   `maxAlunos` int(11) DEFAULT NULL,
@@ -1747,8 +1971,13 @@ CREATE TABLE `Turma` (
   `idGrade` int(11) DEFAULT NULL,
   `idFuncionario` int(11) DEFAULT NULL,
   `idPeriodo` int(11) DEFAULT NULL,
-  `idTurno` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idTurno` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idTurma`),
+  KEY `fk_Turma_GradeCurricular1_idx` (`idGrade`),
+  KEY `fk_Turma_Funcionario1_idx` (`idFuncionario`),
+  KEY `fk_Turma_Periodo1_idx` (`idPeriodo`),
+  KEY `fk_Turma_Turno1_idx` (`idTurno`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `Turma`
@@ -1768,12 +1997,13 @@ INSERT INTO `Turma` (`idTurma`, `descricao`, `multisseriada`, `maxAlunos`, `numM
 -- Estrutura da tabela `Turno`
 --
 
-CREATE TABLE `Turno` (
-  `idTurno` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Turno` (
+  `idTurno` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(100) NOT NULL,
   `horaInicial` char(5) DEFAULT NULL,
-  `horaFinal` char(5) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `horaFinal` char(5) DEFAULT NULL,
+  PRIMARY KEY (`idTurno`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `Turno`
@@ -1789,8 +2019,8 @@ INSERT INTO `Turno` (`idTurno`, `descricao`, `horaInicial`, `horaFinal`) VALUES
 -- Estrutura da tabela `UnidadeEscolar`
 --
 
-CREATE TABLE `UnidadeEscolar` (
-  `idUnidadeEscolar` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `UnidadeEscolar` (
+  `idUnidadeEscolar` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
   `razaoSocial` varchar(100) DEFAULT NULL,
   `abreviatura` varchar(15) DEFAULT NULL,
@@ -1818,8 +2048,16 @@ CREATE TABLE `UnidadeEscolar` (
   `idTipoLocalizacao` int(11) DEFAULT NULL,
   `idRegime` int(11) DEFAULT NULL,
   `idPeriodoAtual` int(11) DEFAULT NULL,
-  `idSitFuncionamento` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idSitFuncionamento` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idUnidadeEscolar`),
+  KEY `fk_UnidadeEscolar_Cidade1_idx` (`idCidade`),
+  KEY `fk_UnidadeEscolar_RedeEnsino1_idx` (`idRedeEnsino`),
+  KEY `fk_UnidadeEscolar_TipoOcupacao1_idx` (`idTipoOcupacao`),
+  KEY `fk_UnidadeEscolar_TipoLocalizacao1_idx` (`idTipoLocalizacao`),
+  KEY `fk_UnidadeEscolar_Regime1_idx` (`idRegime`),
+  KEY `fk_UnidadeEscolar_Periodo1_idx` (`idPeriodoAtual`),
+  KEY `fk_UnidadeEscolar_SitFuncionamento1_idx` (`idSitFuncionamento`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `UnidadeEscolar`
@@ -1837,13 +2075,16 @@ INSERT INTO `UnidadeEscolar` (`idUnidadeEscolar`, `nome`, `razaoSocial`, `abrevi
 -- Estrutura da tabela `UnidFunc`
 --
 
-CREATE TABLE `UnidFunc` (
-  `idUnidFunc` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `UnidFunc` (
+  `idUnidFunc` int(11) NOT NULL AUTO_INCREMENT,
   `idFuncionario` int(11) NOT NULL,
   `idUnidadeEscolar` int(11) NOT NULL,
   `inicio` date DEFAULT NULL,
   `termino` date DEFAULT NULL,
-  `atual` tinyint(1) DEFAULT NULL
+  `atual` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`idUnidFunc`),
+  KEY `fk_UnidFunc_Funcionario1_idx` (`idFuncionario`),
+  KEY `fk_UnidFunc_UnidadeEscolar1_idx` (`idUnidadeEscolar`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1852,13 +2093,16 @@ CREATE TABLE `UnidFunc` (
 -- Estrutura da tabela `Usuario`
 --
 
-CREATE TABLE `Usuario` (
-  `idUsuario` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Usuario` (
+  `idUsuario` int(11) NOT NULL AUTO_INCREMENT,
   `nomeUsuario` varchar(50) NOT NULL,
   `senha` varchar(200) NOT NULL,
   `tipoUsuario` tinyint(4) NOT NULL,
-  `idAparencia` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idAparencia` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idUsuario`),
+  UNIQUE KEY `nomeUsuario_UNIQUE` (`nomeUsuario`),
+  KEY `fk_Usuario_Aparencia1_idx` (`idAparencia`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `Usuario`
@@ -1874,9 +2118,12 @@ INSERT INTO `Usuario` (`idUsuario`, `nomeUsuario`, `senha`, `tipoUsuario`, `idAp
 -- Estrutura da tabela `Usuario_UnidadeEscolar`
 --
 
-CREATE TABLE `Usuario_UnidadeEscolar` (
+CREATE TABLE IF NOT EXISTS `Usuario_UnidadeEscolar` (
   `idUsuario` int(11) NOT NULL,
-  `idUnidadeEscolar` int(11) NOT NULL
+  `idUnidadeEscolar` int(11) NOT NULL,
+  PRIMARY KEY (`idUsuario`,`idUnidadeEscolar`),
+  KEY `fk_Usuario_has_UnidadeEscolar_UnidadeEscolar1_idx` (`idUnidadeEscolar`),
+  KEY `fk_Usuario_has_UnidadeEscolar_Usuario1_idx` (`idUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1885,9 +2132,10 @@ CREATE TABLE `Usuario_UnidadeEscolar` (
 -- Estrutura da tabela `Vacina`
 --
 
-CREATE TABLE `Vacina` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `Vacina` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1896,1347 +2144,15 @@ CREATE TABLE `Vacina` (
 -- Estrutura da tabela `VacinaAluno`
 --
 
-CREATE TABLE `VacinaAluno` (
+CREATE TABLE IF NOT EXISTS `VacinaAluno` (
   `idVacina` int(11) NOT NULL,
   `idAluno` int(11) NOT NULL,
-  `idVacinaAluno` int(11) NOT NULL
+  `idVacinaAluno` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`idVacinaAluno`),
+  KEY `fk_Vacina_has_Aluno_Aluno1_idx` (`idAluno`),
+  KEY `fk_Vacina_has_Aluno_Vacina1_idx` (`idVacina`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `Abrangencia`
---
-ALTER TABLE `Abrangencia`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `Alergia`
---
-ALTER TABLE `Alergia`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `AlergiaAluno`
---
-ALTER TABLE `AlergiaAluno`
-  ADD PRIMARY KEY (`idAlergiaAluno`),
-  ADD KEY `fk_Alergia_has_Aluno_Aluno1_idx` (`idAluno`),
-  ADD KEY `fk_Alergia_has_Aluno_Alergia1_idx` (`idAlergia`);
-
---
--- Indexes for table `Aluno`
---
-ALTER TABLE `Aluno`
-  ADD PRIMARY KEY (`idAluno`),
-  ADD UNIQUE KEY `matricula_UNIQUE` (`matricula`),
-  ADD KEY `fk_Aluno_Cor1_idx` (`idCor`),
-  ADD KEY `fk_Aluno_TipoEndereco1_idx` (`idTipoEndereco`),
-  ADD KEY `fk_Aluno_Cidade1_idx` (`idCidEndereco`),
-  ADD KEY `fk_Aluno_Cidade2_idx` (`idCidNatural`),
-  ADD KEY `fk_Aluno_Nacionalidade1_idx` (`idNacionalidade`),
-  ADD KEY `fk_Aluno_Profissao1_idx` (`idProfPai`),
-  ADD KEY `fk_Aluno_Profissao2_idx` (`idProfMae`),
-  ADD KEY `fk_Aluno_EstadoCivil1_idx` (`idEstadoCivil`),
-  ADD KEY `fk_Aluno_PlanoSaude1_idx` (`idPlanoSaude`),
-  ADD KEY `fk_Aluno_Hospital1_idx` (`idHospital`),
-  ADD KEY `fk_Aluno_TipoDocumento1_idx` (`idTipoDocumento`),
-  ADD KEY `fk_Aluno_Religiao1_idx` (`idReligiao`),
-  ADD KEY `fk_Aluno_SituacaoAluno1_idx` (`idSituacaoAluno`),
-  ADD KEY `fk_Aluno_TipoTransporte1_idx` (`idTipoTransporte`);
-
---
--- Indexes for table `Aparencia`
---
-ALTER TABLE `Aparencia`
-  ADD PRIMARY KEY (`idAparencia`);
-
---
--- Indexes for table `AproveitamentoEstagio`
---
-ALTER TABLE `AproveitamentoEstagio`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `Avaliacao`
---
-ALTER TABLE `Avaliacao`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_Avaliacoes_TipoNota1_idx` (`idTipoNota`),
-  ADD KEY `idTipoNota` (`idTipoNota`);
-
---
--- Indexes for table `Cargo`
---
-ALTER TABLE `Cargo`
-  ADD PRIMARY KEY (`idCargo`);
-
---
--- Indexes for table `CargoFunc`
---
-ALTER TABLE `CargoFunc`
-  ADD PRIMARY KEY (`idCargoFunc`),
-  ADD KEY `fk_CargoFunc_Cargo1_idx` (`idCargo`),
-  ADD KEY `fk_CargoFunc_Funcionario1_idx` (`idFuncionario`),
-  ADD KEY `fk_CargoFunc_UnidadeEscolar1_idx` (`idUnidadeEscolar`);
-
---
--- Indexes for table `Cidade`
---
-ALTER TABLE `Cidade`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_Cidade_Estado1_idx` (`uf`);
-
---
--- Indexes for table `Conceito`
---
-ALTER TABLE `Conceito`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_Conceito_TipoNota1_idx` (`idTipoNota`);
-
---
--- Indexes for table `ConceitoEstagio`
---
-ALTER TABLE `ConceitoEstagio`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `Contraida`
---
-ALTER TABLE `Contraida`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `ContraidaAluno`
---
-ALTER TABLE `ContraidaAluno`
-  ADD PRIMARY KEY (`idContraidaAluno`),
-  ADD KEY `fk_Contraida_has_Aluno_Aluno1_idx` (`idAluno`),
-  ADD KEY `fk_Contraida_has_Aluno_Contraida1_idx` (`idContraida`);
-
---
--- Indexes for table `Cor`
---
-ALTER TABLE `Cor`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `Curso`
---
-ALTER TABLE `Curso`
-  ADD PRIMARY KEY (`idCurso`),
-  ADD KEY `fk_Curso_UnidadeEscolar1_idx` (`idUnidadeEscolar`),
-  ADD KEY `fk_Curso_ResultadoDisciplina1_idx` (`idResultadoAprovado`),
-  ADD KEY `fk_Curso_ResultadoDisciplina2_idx` (`idResultadoRecuperacao`),
-  ADD KEY `fk_Curso_ResultadoDisciplina3_idx` (`idResultadoDependencia`),
-  ADD KEY `fk_Curso_ResultadoDisciplina4_idx` (`idResultadoRepNota`),
-  ADD KEY `fk_Curso_ResultadoDisciplina5_idx` (`idResultadoRepFalta`),
-  ADD KEY `fk_Curso_SerieCurso1_idx` (`idSerieCurso`),
-  ADD KEY `fk_Curso_TipoNota1_idx` (`idTipoNota`),
-  ADD KEY `fk_Curso_Avaliacao1_idx` (`idAvaliacaoMedia`);
-
---
--- Indexes for table `CursoAnterior`
---
-ALTER TABLE `CursoAnterior`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `CursoFunc`
---
-ALTER TABLE `CursoFunc`
-  ADD PRIMARY KEY (`idCursoFunc`),
-  ADD KEY `fk_CursoFunc_Funcionario1_idx` (`idFuncionario`),
-  ADD KEY `fk_CursoFunc_ModalidadeEnsino1_idx` (`idModalidadeEnsino`),
-  ADD KEY `fk_CursoFunc_Estabelecimento1_idx` (`idEstabelecimento`);
-
---
--- Indexes for table `DadosComplementares`
---
-ALTER TABLE `DadosComplementares`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `DepFunc`
---
-ALTER TABLE `DepFunc`
-  ADD PRIMARY KEY (`idDepFunc`),
-  ADD KEY `fk_DepFunc_Funcionario1_idx` (`idFuncionario`),
-  ADD KEY `fk_DepFunc_Relacionamento1_idx` (`idRelacionamento`);
-
---
--- Indexes for table `Desabilidade`
---
-ALTER TABLE `Desabilidade`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `DesabilidadeAluno`
---
-ALTER TABLE `DesabilidadeAluno`
-  ADD PRIMARY KEY (`idDesabilidadeAluno`),
-  ADD KEY `fk_Aluno_has_Desabilidade_Desabilidade1_idx` (`idDesabilidade`),
-  ADD KEY `fk_Aluno_has_Desabilidade_Aluno1_idx` (`idAluno`);
-
---
--- Indexes for table `Disciplina`
---
-ALTER TABLE `Disciplina`
-  ADD PRIMARY KEY (`idDisciplina`);
-
---
--- Indexes for table `DisciplinaAvaliacao`
---
-ALTER TABLE `DisciplinaAvaliacao`
-  ADD PRIMARY KEY (`idDisciplinaAvaliacao`),
-  ADD KEY `fk_DisciplinaAvaliacao_MatriculaDisciplina1_idx` (`idMatriculaDisciplina`),
-  ADD KEY `fk_DisciplinaAvaliacao_Avaliacao1_idx` (`idAvaliacao`),
-  ADD KEY `fk_DisciplinaAvaliacao_Conceito1_idx` (`idConceito`);
-
---
--- Indexes for table `Disciplina_Grade`
---
-ALTER TABLE `Disciplina_Grade`
-  ADD PRIMARY KEY (`idDisciplina_Grade`),
-  ADD KEY `fk_Disciplina_Grade_Disciplina1_idx` (`idDisciplina`),
-  ADD KEY `fk_Disciplina_Grade_GradeCurricular1_idx` (`idGrade`),
-  ADD KEY `fk_Disciplina_Grade_TipoNota1_idx` (`idTipoNota`),
-  ADD KEY `fk_Disciplina_Grade_TipoDisciplina1_idx` (`idTipoDisciplina`);
-
---
--- Indexes for table `Documento`
---
-ALTER TABLE `Documento`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `DocumentoAluno`
---
-ALTER TABLE `DocumentoAluno`
-  ADD PRIMARY KEY (`idDocumentoAluno`),
-  ADD KEY `fk_Documento_has_Aluno_Aluno1_idx` (`idAluno`),
-  ADD KEY `fk_Documento_has_Aluno_Documento1_idx` (`idDocumento`);
-
---
--- Indexes for table `Documento_Curso`
---
-ALTER TABLE `Documento_Curso`
-  ADD PRIMARY KEY (`idDocumento_Curso`),
-  ADD KEY `fk_Curso_has_TipoDocumento_Curso1_idx` (`idCurso`),
-  ADD KEY `fk_Documento_Curso_Documento1_idx` (`idDocumento`);
-
---
--- Indexes for table `Doenca`
---
-ALTER TABLE `Doenca`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `DoencaAluno`
---
-ALTER TABLE `DoencaAluno`
-  ADD PRIMARY KEY (`idDoencaAluno`),
-  ADD KEY `fk_Doenca_has_Aluno_Aluno1_idx` (`idAluno`),
-  ADD KEY `fk_Doenca_has_Aluno_Doenca1_idx` (`idDoenca`);
-
---
--- Indexes for table `Escolaridade`
---
-ALTER TABLE `Escolaridade`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `Estabelecimento`
---
-ALTER TABLE `Estabelecimento`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `EstabelecimentoEnsino`
---
-ALTER TABLE `EstabelecimentoEnsino`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `Cidade_id_idx` (`idCidade`),
-  ADD KEY `fk_EstabelecimentoEnsino_TipoLocalizacao1_idx` (`idTipoLocalizacao`);
-
---
--- Indexes for table `Estado`
---
-ALTER TABLE `Estado`
-  ADD PRIMARY KEY (`uf`);
-
---
--- Indexes for table `EstadoCivil`
---
-ALTER TABLE `EstadoCivil`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `Evento`
---
-ALTER TABLE `Evento`
-  ADD PRIMARY KEY (`idEvento`),
-  ADD KEY `fk_Evento_Periodo1_idx` (`idPeriodo`),
-  ADD KEY `fk_Evento_TipoEventoCalendario1_idx` (`idTipoEventoCalendario`);
-
---
--- Indexes for table `Frase`
---
-ALTER TABLE `Frase`
-  ADD PRIMARY KEY (`idFrase`);
-
---
--- Indexes for table `Funcionario`
---
-ALTER TABLE `Funcionario`
-  ADD PRIMARY KEY (`idFuncionario`),
-  ADD KEY `fk_Professor_TipoEndereco1_idx` (`idTipoEndereco`),
-  ADD KEY `fk_Professor_Cidade1_idx` (`idCidEndereco`),
-  ADD KEY `fk_Funcionario_TipoDocumento1_idx` (`idTipoDocumento`),
-  ADD KEY `fk_Funcionario_Cidade1_idx` (`idCidNatural`),
-  ADD KEY `fk_Funcionario_Nacionalidade1_idx` (`idNacionalidade`),
-  ADD KEY `fk_Funcionario_EstadoCivil1_idx` (`idEstadoCivil`),
-  ADD KEY `fk_Funcionario_TipoAdmissao1_idx` (`idTipoAdmissao`),
-  ADD KEY `fk_Funcionario_SituacaoFuncional1_idx` (`idSituacaoFuncional`),
-  ADD KEY `fk_Funcionario_MotivoDemissao1_idx` (`idMotivoDemissao`);
-
---
--- Indexes for table `GradeCurricular`
---
-ALTER TABLE `GradeCurricular`
-  ADD PRIMARY KEY (`idGrade`),
-  ADD KEY `fk_GradeCurricular_Curso1_idx` (`idCurso`);
-
---
--- Indexes for table `GrauCurso`
---
-ALTER TABLE `GrauCurso`
-  ADD PRIMARY KEY (`idGrauCurso`),
-  ADD KEY `fk_GrauCurso_ModalidadeEnsino1_idx` (`ModalidadeEnsino_id`);
-
---
--- Indexes for table `Horario`
---
-ALTER TABLE `Horario`
-  ADD PRIMARY KEY (`idHorario`),
-  ADD KEY `fk_Horario_Turno1_idx` (`idTurno`);
-
---
--- Indexes for table `HorarioTurma`
---
-ALTER TABLE `HorarioTurma`
-  ADD PRIMARY KEY (`idHorarioTurma`),
-  ADD KEY `fk_HorarioTurma_Turma1_idx` (`idTurma`),
-  ADD KEY `fk_HorarioTurma_Horario1_idx` (`idHorario`),
-  ADD KEY `fk_HorarioTurma_Disciplina_Grade1_idx` (`idDisciplina_Grade`),
-  ADD KEY `fk_HorarioTurma_Funcionario1_idx` (`idFuncionario`),
-  ADD KEY `fk_HorarioTurma_SalaTurma1_idx` (`idSalaTurma`);
-
---
--- Indexes for table `Hospital`
---
-ALTER TABLE `Hospital`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `IEUEnsino`
---
-ALTER TABLE `IEUEnsino`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `InfProfFunc`
---
-ALTER TABLE `InfProfFunc`
-  ADD PRIMARY KEY (`idInfProfFunc`),
-  ADD KEY `fk_InfProfFunc_Funcionario1_idx` (`idFuncionario`),
-  ADD KEY `fk_InfProfFunc_Cargo1_idx` (`idCargo`),
-  ADD KEY `fk_InfProfFunc_Cidade1_idx` (`idCidade`);
-
---
--- Indexes for table `InfraEstrutura`
---
-ALTER TABLE `InfraEstrutura`
-  ADD PRIMARY KEY (`idInfraEstrutura`),
-  ADD KEY `fk_InfraEstrutura_IEUEnsino1_idx` (`idIEUEnsino`),
-  ADD KEY `fk_InfraEstrutura_UnidadeEscolar1_idx` (`idUnidadeEscolar`);
-
---
--- Indexes for table `Livro`
---
-ALTER TABLE `Livro`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `Livro_Curso`
---
-ALTER TABLE `Livro_Curso`
-  ADD PRIMARY KEY (`idLivro_Curso`),
-  ADD KEY `fk_Livro_has_Curso_Curso1_idx` (`idCurso`),
-  ADD KEY `fk_Livro_has_Curso_Livro1_idx` (`idLivro`);
-
---
--- Indexes for table `Matricula`
---
-ALTER TABLE `Matricula`
-  ADD PRIMARY KEY (`idMatricula`),
-  ADD KEY `fk_Matricula_Aluno1_idx` (`idAluno`),
-  ADD KEY `fk_Matricula_Turma1_idx` (`idTurma`),
-  ADD KEY `fk_Matricula_TipoMatricula1_idx` (`idTipoMatricula`);
-
---
--- Indexes for table `MatriculaDisciplina`
---
-ALTER TABLE `MatriculaDisciplina`
-  ADD PRIMARY KEY (`idMatriculaDisciplina`),
-  ADD KEY `fk_MatriculaDisciplina_Matricula1_idx` (`idMatricula`),
-  ADD KEY `fk_MatriculaDisciplina_Disciplina_Grade1_idx` (`idDisciplina_Grade`),
-  ADD KEY `fk_MatriculaDisciplina_ResultadoDisciplina1_idx` (`idResultadoDisciplina`);
-
---
--- Indexes for table `ModalidadeEnsino`
---
-ALTER TABLE `ModalidadeEnsino`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `ModalidadeUnidade`
---
-ALTER TABLE `ModalidadeUnidade`
-  ADD PRIMARY KEY (`idModalidadeUnidade`),
-  ADD KEY `fk_ModalidadeUnidade_ModalidadeEnsino1_idx` (`idModalidadeEnsino`),
-  ADD KEY `fk_ModalidadeUnidade_UnidadeEscolar1_idx` (`idUnidadeEnsino`);
-
---
--- Indexes for table `MotivoDemissao`
---
-ALTER TABLE `MotivoDemissao`
-  ADD PRIMARY KEY (`idMotivoDemissao`);
-
---
--- Indexes for table `Nacionalidade`
---
-ALTER TABLE `Nacionalidade`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `NomeTurma`
---
-ALTER TABLE `NomeTurma`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `NumTels`
---
-ALTER TABLE `NumTels`
-  ADD PRIMARY KEY (`idNumTels`),
-  ADD KEY `fk_NumTels_TipoTelefone1_idx` (`idTipoTelefone`),
-  ADD KEY `fk_NumTels_UnidadeEscolar1_idx` (`idUnidadeEscolar`);
-
---
--- Indexes for table `Periodo`
---
-ALTER TABLE `Periodo`
-  ADD PRIMARY KEY (`idPeriodo`),
-  ADD UNIQUE KEY `periodo_UNIQUE` (`periodo`);
-
---
--- Indexes for table `PlanoSaude`
---
-ALTER TABLE `PlanoSaude`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `Pre_Requisito`
---
-ALTER TABLE `Pre_Requisito`
-  ADD PRIMARY KEY (`idPreRequisito`),
-  ADD KEY `fk_Pre_Requisito_Disciplina_Grade1_idx` (`idDisciplina_Grade`),
-  ADD KEY `fk_Pre_Requisito_Disciplina_Grade2_idx` (`idDisciplina_Pre_Requisito`);
-
---
--- Indexes for table `Profissao`
---
-ALTER TABLE `Profissao`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `RedeEnsino`
---
-ALTER TABLE `RedeEnsino`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `RefFunc`
---
-ALTER TABLE `RefFunc`
-  ADD PRIMARY KEY (`idRefFunc`),
-  ADD KEY `fk_RefFunc_Funcionario1_idx` (`idFuncionario`),
-  ADD KEY `fk_RefFunc_Relacionamento1_idx` (`idRelacionamento`);
-
---
--- Indexes for table `Regime`
---
-ALTER TABLE `Regime`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `Relacionamento`
---
-ALTER TABLE `Relacionamento`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `Religiao`
---
-ALTER TABLE `Religiao`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `RespAluno`
---
-ALTER TABLE `RespAluno`
-  ADD PRIMARY KEY (`idRespAluno`),
-  ADD KEY `fk_RespAluno_Responsavel1_idx` (`idResponsavel`),
-  ADD KEY `fk_RespAluno_Aluno1_idx` (`idAluno`),
-  ADD KEY `fk_RespAluno_TipoResponsavel1_idx` (`idTipoResponsavel`);
-
---
--- Indexes for table `Responsavel`
---
-ALTER TABLE `Responsavel`
-  ADD PRIMARY KEY (`idResponsavel`),
-  ADD KEY `fk_Responsavel_Cidade1_idx` (`idCidEndereco`),
-  ADD KEY `fk_Responsavel_Cidade2_idx` (`idCidNatural`),
-  ADD KEY `fk_Responsavel_TipoEndereco1_idx` (`idTipoEndereco`),
-  ADD KEY `fk_Responsavel_Profissao1_idx` (`idProfissao`),
-  ADD KEY `fk_Responsavel_Nacionalidade1_idx` (`idNacionalidade`),
-  ADD KEY `fk_Responsavel_TipoDocumento1_idx` (`idTipoDocumento`),
-  ADD KEY `fk_Responsavel_EstadoCivil1_idx` (`idEstadoCivil`);
-
---
--- Indexes for table `ResultadoDisciplina`
---
-ALTER TABLE `ResultadoDisciplina`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `Rotina`
---
-ALTER TABLE `Rotina`
-  ADD PRIMARY KEY (`idRotina`);
-
---
--- Indexes for table `Sala`
---
-ALTER TABLE `Sala`
-  ADD PRIMARY KEY (`idSala`),
-  ADD KEY `fk_Sala_UnidadeEscolar1_idx` (`idUnidadeEscolar`),
-  ADD KEY `fk_Sala_TipoSala1_idx` (`idTipoSala`),
-  ADD KEY `fk_Sala_TipoUtilizacao1_idx` (`idTipoUtilizacao`);
-
---
--- Indexes for table `SalaTurma`
---
-ALTER TABLE `SalaTurma`
-  ADD PRIMARY KEY (`idSalaTurma`),
-  ADD KEY `fk_SalaTurma_Sala1_idx` (`idSala`),
-  ADD KEY `fk_SalaTurma_Turma1_idx` (`idTurma`);
-
---
--- Indexes for table `SerieCurso`
---
-ALTER TABLE `SerieCurso`
-  ADD PRIMARY KEY (`idSerieCurso`),
-  ADD KEY `fk_SerieCurso_GrauCurso_idx` (`idGrauCurso`);
-
---
--- Indexes for table `SitFuncionamento`
---
-ALTER TABLE `SitFuncionamento`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `SituacaoAluno`
---
-ALTER TABLE `SituacaoAluno`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `SituacaoConta`
---
-ALTER TABLE `SituacaoConta`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `SituacaoFuncional`
---
-ALTER TABLE `SituacaoFuncional`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `SituacaoMatricula`
---
-ALTER TABLE `SituacaoMatricula`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TelAluno`
---
-ALTER TABLE `TelAluno`
-  ADD PRIMARY KEY (`idTelAluno`),
-  ADD KEY `fk_TelAluno_Aluno1_idx` (`idAluno`),
-  ADD KEY `fk_TelAluno_TipoTelefone1_idx` (`idTipoTelefone`);
-
---
--- Indexes for table `TelFunc`
---
-ALTER TABLE `TelFunc`
-  ADD PRIMARY KEY (`idTelFunc`),
-  ADD KEY `fk_TelsProf_Professor1_idx` (`idFuncionario`),
-  ADD KEY `fk_TelsProf_TipoTelefone1_idx` (`idTipoTelefone`);
-
---
--- Indexes for table `TipoAdmissao`
---
-ALTER TABLE `TipoAdmissao`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoAula`
---
-ALTER TABLE `TipoAula`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoDependencia`
---
-ALTER TABLE `TipoDependencia`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoDespesa`
---
-ALTER TABLE `TipoDespesa`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoDisciplina`
---
-ALTER TABLE `TipoDisciplina`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoDocumento`
---
-ALTER TABLE `TipoDocumento`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoEndereco`
---
-ALTER TABLE `TipoEndereco`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoEnsinoCurso`
---
-ALTER TABLE `TipoEnsinoCurso`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoEventoCalendario`
---
-ALTER TABLE `TipoEventoCalendario`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoLocalizacao`
---
-ALTER TABLE `TipoLocalizacao`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoMatricula`
---
-ALTER TABLE `TipoMatricula`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoNota`
---
-ALTER TABLE `TipoNota`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoOcorFunc`
---
-ALTER TABLE `TipoOcorFunc`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoOcorrencia`
---
-ALTER TABLE `TipoOcorrencia`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoOcupacao`
---
-ALTER TABLE `TipoOcupacao`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoPrograma`
---
-ALTER TABLE `TipoPrograma`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_TipoPrograma_Abrangencia1_idx` (`Abrangencia_id`);
-
---
--- Indexes for table `TipoReceita`
---
-ALTER TABLE `TipoReceita`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoResponsavel`
---
-ALTER TABLE `TipoResponsavel`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoSala`
---
-ALTER TABLE `TipoSala`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoTelefone`
---
-ALTER TABLE `TipoTelefone`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoTransporte`
---
-ALTER TABLE `TipoTransporte`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `TipoUtilizacao`
---
-ALTER TABLE `TipoUtilizacao`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `Turma`
---
-ALTER TABLE `Turma`
-  ADD PRIMARY KEY (`idTurma`),
-  ADD KEY `fk_Turma_GradeCurricular1_idx` (`idGrade`),
-  ADD KEY `fk_Turma_Funcionario1_idx` (`idFuncionario`),
-  ADD KEY `fk_Turma_Periodo1_idx` (`idPeriodo`),
-  ADD KEY `fk_Turma_Turno1_idx` (`idTurno`);
-
---
--- Indexes for table `Turno`
---
-ALTER TABLE `Turno`
-  ADD PRIMARY KEY (`idTurno`);
-
---
--- Indexes for table `UnidadeEscolar`
---
-ALTER TABLE `UnidadeEscolar`
-  ADD PRIMARY KEY (`idUnidadeEscolar`),
-  ADD KEY `fk_UnidadeEscolar_Cidade1_idx` (`idCidade`),
-  ADD KEY `fk_UnidadeEscolar_RedeEnsino1_idx` (`idRedeEnsino`),
-  ADD KEY `fk_UnidadeEscolar_TipoOcupacao1_idx` (`idTipoOcupacao`),
-  ADD KEY `fk_UnidadeEscolar_TipoLocalizacao1_idx` (`idTipoLocalizacao`),
-  ADD KEY `fk_UnidadeEscolar_Regime1_idx` (`idRegime`),
-  ADD KEY `fk_UnidadeEscolar_Periodo1_idx` (`idPeriodoAtual`),
-  ADD KEY `fk_UnidadeEscolar_SitFuncionamento1_idx` (`idSitFuncionamento`);
-
---
--- Indexes for table `UnidFunc`
---
-ALTER TABLE `UnidFunc`
-  ADD PRIMARY KEY (`idUnidFunc`),
-  ADD KEY `fk_UnidFunc_Funcionario1_idx` (`idFuncionario`),
-  ADD KEY `fk_UnidFunc_UnidadeEscolar1_idx` (`idUnidadeEscolar`);
-
---
--- Indexes for table `Usuario`
---
-ALTER TABLE `Usuario`
-  ADD PRIMARY KEY (`idUsuario`),
-  ADD UNIQUE KEY `nomeUsuario_UNIQUE` (`nomeUsuario`),
-  ADD KEY `fk_Usuario_Aparencia1_idx` (`idAparencia`);
-
---
--- Indexes for table `Usuario_UnidadeEscolar`
---
-ALTER TABLE `Usuario_UnidadeEscolar`
-  ADD PRIMARY KEY (`idUsuario`,`idUnidadeEscolar`),
-  ADD KEY `fk_Usuario_has_UnidadeEscolar_UnidadeEscolar1_idx` (`idUnidadeEscolar`),
-  ADD KEY `fk_Usuario_has_UnidadeEscolar_Usuario1_idx` (`idUsuario`);
-
---
--- Indexes for table `Vacina`
---
-ALTER TABLE `Vacina`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `VacinaAluno`
---
-ALTER TABLE `VacinaAluno`
-  ADD PRIMARY KEY (`idVacinaAluno`),
-  ADD KEY `fk_Vacina_has_Aluno_Aluno1_idx` (`idAluno`),
-  ADD KEY `fk_Vacina_has_Aluno_Vacina1_idx` (`idVacina`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `Abrangencia`
---
-ALTER TABLE `Abrangencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Alergia`
---
-ALTER TABLE `Alergia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `AlergiaAluno`
---
-ALTER TABLE `AlergiaAluno`
-  MODIFY `idAlergiaAluno` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Aluno`
---
-ALTER TABLE `Aluno`
-  MODIFY `idAluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
---
--- AUTO_INCREMENT for table `Aparencia`
---
-ALTER TABLE `Aparencia`
-  MODIFY `idAparencia` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `AproveitamentoEstagio`
---
-ALTER TABLE `AproveitamentoEstagio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Avaliacao`
---
-ALTER TABLE `Avaliacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `Cargo`
---
-ALTER TABLE `Cargo`
-  MODIFY `idCargo` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `CargoFunc`
---
-ALTER TABLE `CargoFunc`
-  MODIFY `idCargoFunc` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Cidade`
---
-ALTER TABLE `Cidade`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Conceito`
---
-ALTER TABLE `Conceito`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `ConceitoEstagio`
---
-ALTER TABLE `ConceitoEstagio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Contraida`
---
-ALTER TABLE `Contraida`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `ContraidaAluno`
---
-ALTER TABLE `ContraidaAluno`
-  MODIFY `idContraidaAluno` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Cor`
---
-ALTER TABLE `Cor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Curso`
---
-ALTER TABLE `Curso`
-  MODIFY `idCurso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `CursoAnterior`
---
-ALTER TABLE `CursoAnterior`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `CursoFunc`
---
-ALTER TABLE `CursoFunc`
-  MODIFY `idCursoFunc` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `DadosComplementares`
---
-ALTER TABLE `DadosComplementares`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `DepFunc`
---
-ALTER TABLE `DepFunc`
-  MODIFY `idDepFunc` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Desabilidade`
---
-ALTER TABLE `Desabilidade`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `DesabilidadeAluno`
---
-ALTER TABLE `DesabilidadeAluno`
-  MODIFY `idDesabilidadeAluno` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Disciplina`
---
-ALTER TABLE `Disciplina`
-  MODIFY `idDisciplina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `DisciplinaAvaliacao`
---
-ALTER TABLE `DisciplinaAvaliacao`
-  MODIFY `idDisciplinaAvaliacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
---
--- AUTO_INCREMENT for table `Disciplina_Grade`
---
-ALTER TABLE `Disciplina_Grade`
-  MODIFY `idDisciplina_Grade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT for table `Documento`
---
-ALTER TABLE `Documento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `DocumentoAluno`
---
-ALTER TABLE `DocumentoAluno`
-  MODIFY `idDocumentoAluno` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Documento_Curso`
---
-ALTER TABLE `Documento_Curso`
-  MODIFY `idDocumento_Curso` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Doenca`
---
-ALTER TABLE `Doenca`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `DoencaAluno`
---
-ALTER TABLE `DoencaAluno`
-  MODIFY `idDoencaAluno` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Escolaridade`
---
-ALTER TABLE `Escolaridade`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Estabelecimento`
---
-ALTER TABLE `Estabelecimento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `EstabelecimentoEnsino`
---
-ALTER TABLE `EstabelecimentoEnsino`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `EstadoCivil`
---
-ALTER TABLE `EstadoCivil`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Evento`
---
-ALTER TABLE `Evento`
-  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Frase`
---
-ALTER TABLE `Frase`
-  MODIFY `idFrase` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Funcionario`
---
-ALTER TABLE `Funcionario`
-  MODIFY `idFuncionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `GradeCurricular`
---
-ALTER TABLE `GradeCurricular`
-  MODIFY `idGrade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `GrauCurso`
---
-ALTER TABLE `GrauCurso`
-  MODIFY `idGrauCurso` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Horario`
---
-ALTER TABLE `Horario`
-  MODIFY `idHorario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT for table `HorarioTurma`
---
-ALTER TABLE `HorarioTurma`
-  MODIFY `idHorarioTurma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT for table `Hospital`
---
-ALTER TABLE `Hospital`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `IEUEnsino`
---
-ALTER TABLE `IEUEnsino`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `InfProfFunc`
---
-ALTER TABLE `InfProfFunc`
-  MODIFY `idInfProfFunc` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `InfraEstrutura`
---
-ALTER TABLE `InfraEstrutura`
-  MODIFY `idInfraEstrutura` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Livro`
---
-ALTER TABLE `Livro`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Livro_Curso`
---
-ALTER TABLE `Livro_Curso`
-  MODIFY `idLivro_Curso` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Matricula`
---
-ALTER TABLE `Matricula`
-  MODIFY `idMatricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
---
--- AUTO_INCREMENT for table `MatriculaDisciplina`
---
-ALTER TABLE `MatriculaDisciplina`
-  MODIFY `idMatriculaDisciplina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
---
--- AUTO_INCREMENT for table `ModalidadeEnsino`
---
-ALTER TABLE `ModalidadeEnsino`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `ModalidadeUnidade`
---
-ALTER TABLE `ModalidadeUnidade`
-  MODIFY `idModalidadeUnidade` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `MotivoDemissao`
---
-ALTER TABLE `MotivoDemissao`
-  MODIFY `idMotivoDemissao` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Nacionalidade`
---
-ALTER TABLE `Nacionalidade`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `NomeTurma`
---
-ALTER TABLE `NomeTurma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `NumTels`
---
-ALTER TABLE `NumTels`
-  MODIFY `idNumTels` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Periodo`
---
-ALTER TABLE `Periodo`
-  MODIFY `idPeriodo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `PlanoSaude`
---
-ALTER TABLE `PlanoSaude`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Pre_Requisito`
---
-ALTER TABLE `Pre_Requisito`
-  MODIFY `idPreRequisito` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Profissao`
---
-ALTER TABLE `Profissao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `RedeEnsino`
---
-ALTER TABLE `RedeEnsino`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `RefFunc`
---
-ALTER TABLE `RefFunc`
-  MODIFY `idRefFunc` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Regime`
---
-ALTER TABLE `Regime`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Relacionamento`
---
-ALTER TABLE `Relacionamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Religiao`
---
-ALTER TABLE `Religiao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `RespAluno`
---
-ALTER TABLE `RespAluno`
-  MODIFY `idRespAluno` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Responsavel`
---
-ALTER TABLE `Responsavel`
-  MODIFY `idResponsavel` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `ResultadoDisciplina`
---
-ALTER TABLE `ResultadoDisciplina`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `Rotina`
---
-ALTER TABLE `Rotina`
-  MODIFY `idRotina` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Sala`
---
-ALTER TABLE `Sala`
-  MODIFY `idSala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `SalaTurma`
---
-ALTER TABLE `SalaTurma`
-  MODIFY `idSalaTurma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `SerieCurso`
---
-ALTER TABLE `SerieCurso`
-  MODIFY `idSerieCurso` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `SitFuncionamento`
---
-ALTER TABLE `SitFuncionamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `SituacaoAluno`
---
-ALTER TABLE `SituacaoAluno`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `SituacaoConta`
---
-ALTER TABLE `SituacaoConta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `SituacaoFuncional`
---
-ALTER TABLE `SituacaoFuncional`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `SituacaoMatricula`
---
-ALTER TABLE `SituacaoMatricula`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TelAluno`
---
-ALTER TABLE `TelAluno`
-  MODIFY `idTelAluno` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TelFunc`
---
-ALTER TABLE `TelFunc`
-  MODIFY `idTelFunc` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoAdmissao`
---
-ALTER TABLE `TipoAdmissao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoAula`
---
-ALTER TABLE `TipoAula`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoDependencia`
---
-ALTER TABLE `TipoDependencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoDespesa`
---
-ALTER TABLE `TipoDespesa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoDisciplina`
---
-ALTER TABLE `TipoDisciplina`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoDocumento`
---
-ALTER TABLE `TipoDocumento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoEndereco`
---
-ALTER TABLE `TipoEndereco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoEnsinoCurso`
---
-ALTER TABLE `TipoEnsinoCurso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoEventoCalendario`
---
-ALTER TABLE `TipoEventoCalendario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoLocalizacao`
---
-ALTER TABLE `TipoLocalizacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoMatricula`
---
-ALTER TABLE `TipoMatricula`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoNota`
---
-ALTER TABLE `TipoNota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `TipoOcorFunc`
---
-ALTER TABLE `TipoOcorFunc`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoOcorrencia`
---
-ALTER TABLE `TipoOcorrencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoOcupacao`
---
-ALTER TABLE `TipoOcupacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoPrograma`
---
-ALTER TABLE `TipoPrograma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoReceita`
---
-ALTER TABLE `TipoReceita`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoResponsavel`
---
-ALTER TABLE `TipoResponsavel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoSala`
---
-ALTER TABLE `TipoSala`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoTelefone`
---
-ALTER TABLE `TipoTelefone`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoTransporte`
---
-ALTER TABLE `TipoTransporte`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TipoUtilizacao`
---
-ALTER TABLE `TipoUtilizacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Turma`
---
-ALTER TABLE `Turma`
-  MODIFY `idTurma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT for table `Turno`
---
-ALTER TABLE `Turno`
-  MODIFY `idTurno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `UnidadeEscolar`
---
-ALTER TABLE `UnidadeEscolar`
-  MODIFY `idUnidadeEscolar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `UnidFunc`
---
-ALTER TABLE `UnidFunc`
-  MODIFY `idUnidFunc` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Usuario`
---
-ALTER TABLE `Usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `Vacina`
---
-ALTER TABLE `Vacina`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `VacinaAluno`
---
-ALTER TABLE `VacinaAluno`
-  MODIFY `idVacinaAluno` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Constraints for dumped tables
 --
