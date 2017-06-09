@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController  } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
@@ -29,14 +29,15 @@ export class Turma {
   nota : any;
   media : any;
   numNotas: any;
+
   /*controles*/
   habilitarLancarNota : boolean;
-
+  loading : any;
   hidden              :boolean;
   /*configuração da página*/
   titulo              :string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, public loadingCtrl: LoadingController) {
 	  this.unidadeEscolar = " ";
     this.sala = " ";
     this.disciplina = " ";
@@ -55,8 +56,8 @@ export class Turma {
     this.idTurma = this.navParams.get('idTurma');
     this.idDisciplina = this.navParams.get('idDisciplina');
 
-
     this.atualizarInformacoesTurma();
+
     
   }//fim constructor
   
@@ -95,7 +96,12 @@ export class Turma {
   }//fim mudarCorMedia
   /*atualiza o card infos da disciplina*/
   atualizarInformacoesTurma(){
-       console.log(this.idTurma);		
+    let loading = this.loadingCtrl.create({
+      content: 'aguarde...',
+      dismissOnPageChange: true
+    });
+    loading.present();
+
        this.http.get('http://192.168.0.150/Educar/php/newDatabase/index.php/Turma/turmaInfos/?idTurma='+this.idTurma+'&idDisciplina='+this.idDisciplina)
 		.map(res => res.json()).subscribe(data => {
                    this.sala=data.sala; 
@@ -107,7 +113,8 @@ export class Turma {
 		.map(res => res.json()).subscribe(data => {
                    this.quant_alunos=data; 
                    if(parseFloat(this.quant_alunos) > 0){
-                      this.atualizarListaAlunos();         
+                      this.atualizarListaAlunos();  
+                      loading.dismiss();       
                     }
                 });
 
@@ -145,7 +152,6 @@ export class Turma {
                	   }
              });
        
-        
   }//fim atualizarListaAlunos
 
   isExibicao(aluno:any){
@@ -181,5 +187,9 @@ export class Turma {
         }else{
            return "assets/img/f.png";
         }
+  }
+
+  presentLoading() {
+    
   }
 }
